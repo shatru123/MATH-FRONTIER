@@ -1,5 +1,15 @@
-# Multi-stage Dockerfile for Math Frontier API (.NET 10)
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+# Multi-stage Dockerfile for Math Frontier (Unified Full-Stack: React Frontend + .NET 10 API)
+
+# Stage 1: Build React Frontend
+FROM node:22-alpine AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/math-frontier-web/package*.json ./
+RUN npm ci
+COPY frontend/math-frontier-web/ ./
+RUN npm run build
+
+# Stage 2: Build .NET 10 API
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS backend-build
 WORKDIR /src
 
 # Copy solution and project files for caching dependency restore
@@ -16,10 +26,11 @@ COPY backend/ ./backend/
 WORKDIR /src/backend/MathFrontier.Api
 RUN dotnet publish MathFrontier.Api.csproj -c Release -o /app/publish /p:UseAppHost=false
 
-# Stage 2: Runtime image
+# Stage 3: Unified ASP.NET Core Runtime Image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=backend-build /app/publish .
+COPY --from=frontend-build /app/frontend/dist ./wwwroot
 
 # Environment configuration
 ENV ASPNETCORE_ENVIRONMENT=Production

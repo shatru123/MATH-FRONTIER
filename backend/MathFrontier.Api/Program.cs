@@ -48,29 +48,13 @@ builder.Services.AddScoped<ITimelineRepository, TimelineRepository>();
 builder.Services.AddScoped<ISearchService, SearchService>();
 
 // 5. CORS Policy
-var corsOriginsEnv = builder.Configuration["CORS_ORIGINS"];
-var allowedOrigins = !string.IsNullOrWhiteSpace(corsOriginsEnv)
-    ? corsOriginsEnv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-    : new[] { "http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "https://math-frontier-web.onrender.com" };
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MathFrontierCors", policy =>
     {
-        if (builder.Environment.IsDevelopment())
-        {
-            policy.SetIsOriginAllowed(_ => true)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        }
-        else
-        {
-            policy.WithOrigins(allowedOrigins)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        }
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -97,6 +81,12 @@ using (var scope = app.Services.CreateScope())
 }
 
 // 8. HTTP pipeline configuration
+app.UseCors("MathFrontierCors");
+
+// Serve frontend static files if present in wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapOpenApi();
 
 // Swagger UI endpoint
@@ -132,9 +122,34 @@ app.MapGet("/swagger", () => Results.Content("""
 </html>
 """, "text/html"));
 
-app.UseCors("MathFrontierCors");
+// Root route: if wwwroot/index.html exists, serve it; otherwise redirect to /swagger
+app.MapGet("/", (IWebHostEnvironment env) =>
+{
+    var indexPath = Path.Combine(env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot"), "index.html");
+    if (File.Exists(indexPath))
+    {
+        return Results.File(indexPath, "text/html");
+    }
+    return Results.Redirect("/swagger");
+});
+
 app.UseAuthorization();
 app.MapControllers();
+
+// SPA client-side fallback
+app.MapFallback((IWebHostEnvironment env) =>
+{
+    var indexPath = Path.Combine(env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot"), "index.html");
+    if (File.Exists(indexPath))
+    {
+        return Results.File(indexPath, "text/html");
+    }
+    return Results.NotFound(new
+    {
+        error = "Not Found",
+        message = "Math Frontier API is active. Visit /swagger for interactive documentation or /health for service health."
+    });
+});
 
 app.Run();
 
