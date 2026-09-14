@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MathFrontier.Api/MathFrontier.Api.csproj" />
+  <Project Path="MathFrontier.Core/MathFrontier.Core.csproj" />
+  <Project Path="MathFrontier.Infrastructure/MathFrontier.Infrastructure.csproj" />
+  <Project Path="MathFrontier.Tests/MathFrontier.Tests.csproj" />
+</Solution>
