@@ -20,6 +20,7 @@ import { api } from '../services/api';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { KaTeXMath } from '../components/common/KaTeXMath';
 import { IntuitionVsMath } from '../components/common/IntuitionVsMath';
+import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { getVisualizationComponent } from '../components/visualizations/registry';
 
 export const ProblemDetailPage: React.FC = () => {
@@ -154,7 +155,9 @@ export const ProblemDetailPage: React.FC = () => {
             </span>
           </div>
 
-          <VizComponent />
+          <ErrorBoundary fallbackTitle="Interactive visualization could not be initialized.">
+            <VizComponent />
+          </ErrorBoundary>
         </section>
       )}
 

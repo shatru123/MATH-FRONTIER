@@ -80,16 +80,20 @@ class MathFrontierApiClient {
   }
 
   async getProblemBySlug(slug: string): Promise<Problem | null> {
-    const fallback = FALLBACK_PROBLEMS.find(p => p.slug.toLowerCase() === slug.toLowerCase()) || null;
-    return this.fetchJson<Problem | null>(`/api/problems/${slug}`, fallback);
+    let normalized = slug.toLowerCase();
+    if (normalized === 'navier-stokes') normalized = 'navier-stokes-smoothness';
+    const fallback = FALLBACK_PROBLEMS.find(p => p.slug.toLowerCase() === normalized) || null;
+    return this.fetchJson<Problem | null>(`/api/problems/${normalized}`, fallback);
   }
 
   async getRelatedProblems(slug: string): Promise<Problem[]> {
-    const problem = FALLBACK_PROBLEMS.find(p => p.slug.toLowerCase() === slug.toLowerCase());
+    let normalized = slug.toLowerCase();
+    if (normalized === 'navier-stokes') normalized = 'navier-stokes-smoothness';
+    const problem = FALLBACK_PROBLEMS.find(p => p.slug.toLowerCase() === normalized);
     const fallback = problem
       ? FALLBACK_PROBLEMS.filter(p => problem.relatedProblems.includes(p.slug))
       : [];
-    return this.fetchJson<Problem[]>(`/api/problems/${slug}/related`, fallback);
+    return this.fetchJson<Problem[]>(`/api/problems/${normalized}/related`, fallback);
   }
 
   async getWonders(): Promise<MathematicalWonder[]> {
@@ -97,8 +101,10 @@ class MathFrontierApiClient {
   }
 
   async getWonderBySlug(slug: string): Promise<MathematicalWonder | null> {
-    const fallback = FALLBACK_WONDERS.find(w => w.slug.toLowerCase() === slug.toLowerCase()) || null;
-    return this.fetchJson<MathematicalWonder | null>(`/api/wonders/${slug}`, fallback);
+    let normalized = slug.toLowerCase();
+    if (normalized === 'banach-tarski') normalized = 'banach-tarski-paradox';
+    const fallback = FALLBACK_WONDERS.find(w => w.slug.toLowerCase() === normalized) || null;
+    return this.fetchJson<MathematicalWonder | null>(`/api/wonders/${normalized}`, fallback);
   }
 
   async getVisualizations(): Promise<Visualization[]> {
@@ -106,8 +112,10 @@ class MathFrontierApiClient {
   }
 
   async getVisualizationBySlug(slug: string): Promise<Visualization | null> {
-    const fallback = FALLBACK_VISUALIZATIONS.find(v => v.slug.toLowerCase() === slug.toLowerCase()) || null;
-    return this.fetchJson<Visualization | null>(`/api/visualizations/${slug}`, fallback);
+    let normalized = slug.toLowerCase();
+    if (normalized === 'banach-tarski-paradox') normalized = 'banach-tarski';
+    const fallback = FALLBACK_VISUALIZATIONS.find(v => v.slug.toLowerCase() === normalized) || null;
+    return this.fetchJson<Visualization | null>(`/api/visualizations/${normalized}`, fallback);
   }
 
   async getTimeline(): Promise<TimelineEvent[]> {

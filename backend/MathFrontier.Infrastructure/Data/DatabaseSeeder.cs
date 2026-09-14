@@ -10,23 +10,38 @@ public static class DatabaseSeeder
     {
         await context.Database.EnsureCreatedAsync();
 
-        if (await context.Categories.AnyAsync())
-        {
-            return; // Already seeded
-        }
-
         // 1. CATEGORIES
-        var catNumberTheory = new Category { Id = 1, Slug = "number-theory", Name = "Number Theory", Description = "The arithmetic of integers, primes, and divisibility.", Icon = "Binary", Color = "#3b82f6", DisplayOrder = 1 };
-        var catTopology = new Category { Id = 2, Slug = "topology", Name = "Topology", Description = "Properties of space preserved under continuous deformation.", Icon = "Shapes", Color = "#8b5cf6", DisplayOrder = 2 };
-        var catGeometry = new Category { Id = 3, Slug = "geometry", Name = "Geometry", Description = "Shapes, curvature, manifolds, and spatial relationships.", Icon = "Compass", Color = "#06b6d4", DisplayOrder = 3 };
-        var catLogic = new Category { Id = 4, Slug = "logic-foundations", Name = "Mathematical Logic & Foundations", Description = "Formal proof systems, computability, and independence.", Icon = "Cpu", Color = "#ec4899", DisplayOrder = 4 };
-        var catCS = new Category { Id = 5, Slug = "computer-science", Name = "Theoretical Computer Science", Description = "Complexity classes, algorithmic limits, and automata.", Icon = "Terminal", Color = "#10b981", DisplayOrder = 5 };
-        var catPhysics = new Category { Id = 6, Slug = "mathematical-physics", Name = "Mathematical Physics", Description = "Fluid dynamics, quantum fields, and spacetime geometry.", Icon = "Atom", Color = "#f59e0b", DisplayOrder = 6 };
-        var catAnalysis = new Category { Id = 7, Slug = "analysis", Name = "Mathematical Analysis", Description = "Limits, differential equations, and complex analysis.", Icon = "TrendingUp", Color = "#6366f1", DisplayOrder = 7 };
-        var catParadoxes = new Category { Id = 8, Slug = "paradoxes", Name = "Paradoxes & Mathematical Phenomena", Description = "Mind-bending theorems, counter-intuitive results, and fractal sets.", Icon = "Sparkles", Color = "#e11d48", DisplayOrder = 8 };
+        var categories = new List<Category>
+        {
+            new Category { Id = 1, Slug = "number-theory", Name = "Number Theory", Description = "The arithmetic of integers, primes, and divisibility.", Icon = "Binary", Color = "#3b82f6", DisplayOrder = 1 },
+            new Category { Id = 2, Slug = "topology", Name = "Topology", Description = "Properties of space preserved under continuous deformation.", Icon = "Shapes", Color = "#8b5cf6", DisplayOrder = 2 },
+            new Category { Id = 3, Slug = "geometry", Name = "Geometry", Description = "Shapes, curvature, manifolds, and spatial relationships.", Icon = "Compass", Color = "#06b6d4", DisplayOrder = 3 },
+            new Category { Id = 4, Slug = "logic-foundations", Name = "Mathematical Logic & Foundations", Description = "Formal proof systems, computability, and independence.", Icon = "Cpu", Color = "#ec4899", DisplayOrder = 4 },
+            new Category { Id = 5, Slug = "computer-science", Name = "Theoretical Computer Science", Description = "Complexity classes, algorithmic limits, and automata.", Icon = "Terminal", Color = "#10b981", DisplayOrder = 5 },
+            new Category { Id = 6, Slug = "mathematical-physics", Name = "Mathematical Physics", Description = "Fluid dynamics, quantum fields, and spacetime geometry.", Icon = "Atom", Color = "#f59e0b", DisplayOrder = 6 },
+            new Category { Id = 7, Slug = "analysis", Name = "Mathematical Analysis", Description = "Limits, differential equations, and complex analysis.", Icon = "TrendingUp", Color = "#6366f1", DisplayOrder = 7 },
+            new Category { Id = 8, Slug = "paradoxes", Name = "Paradoxes & Mathematical Phenomena", Description = "Mind-bending theorems, counter-intuitive results, and fractal sets.", Icon = "Sparkles", Color = "#e11d48", DisplayOrder = 8 }
+        };
 
-        context.Categories.AddRange(catNumberTheory, catTopology, catGeometry, catLogic, catCS, catPhysics, catAnalysis, catParadoxes);
+        foreach (var cat in categories)
+        {
+            if (!await context.Categories.AnyAsync(c => c.Slug == cat.Slug))
+            {
+                if (await context.Categories.AnyAsync()) cat.Id = 0;
+                context.Categories.Add(cat);
+            }
+        }
         await context.SaveChangesAsync();
+
+        var existingCats = await context.Categories.ToDictionaryAsync(c => c.Slug, c => c.Id);
+        var catNumberTheory = new Category { Id = existingCats.GetValueOrDefault("number-theory", 1) };
+        var catTopology = new Category { Id = existingCats.GetValueOrDefault("topology", 2) };
+        var catGeometry = new Category { Id = existingCats.GetValueOrDefault("geometry", 3) };
+        var catLogic = new Category { Id = existingCats.GetValueOrDefault("logic-foundations", 4) };
+        var catCS = new Category { Id = existingCats.GetValueOrDefault("computer-science", 5) };
+        var catPhysics = new Category { Id = existingCats.GetValueOrDefault("mathematical-physics", 6) };
+        var catAnalysis = new Category { Id = existingCats.GetValueOrDefault("analysis", 7) };
+        var catParadoxes = new Category { Id = existingCats.GetValueOrDefault("paradoxes", 8) };
 
         // 2. SOURCES
         var sources = new List<Source>
@@ -40,7 +55,15 @@ public static class DatabaseSeeder
             new Source { Id = 7, Title = "Almost all orbits of the Collatz map attain almost bounded values", Authors = "Tao, Terence", Year = 2022, Publication = "Forum of Mathematics, Pi, 10, e12", Url = "https://doi.org/10.1017/fmp.2022.8", SourceType = "Journal", IsPeerReviewed = true, CitationKey = "Tao2022" },
             new Source { Id = 8, Title = "Modular elliptic curves and Fermat's Last Theorem", Authors = "Wiles, Andrew", Year = 1995, Publication = "Annals of Mathematics, 141(3), 443-551", Url = "https://doi.org/10.2307/2118559", SourceType = "Journal", IsPeerReviewed = true, CitationKey = "Wiles1995" }
         };
-        context.Sources.AddRange(sources);
+
+        foreach (var s in sources)
+        {
+            if (!await context.Sources.AnyAsync(x => x.CitationKey == s.CitationKey))
+            {
+                if (await context.Sources.AnyAsync()) s.Id = 0;
+                context.Sources.Add(s);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 3. MATHEMATICIANS
@@ -52,7 +75,15 @@ public static class DatabaseSeeder
             new Mathematician { Id = 4, Slug = "kurt-godel", Name = "Kurt Gödel", BornYear = 1906, DiedYear = 1978, Nationality = "Austrian-American", Biography = "Disproved Hilbert's program with the Incompleteness Theorems; established the consistency of the Continuum Hypothesis.", KeyContributions = new() { "Incompleteness Theorems", "Constructible Universe L" }, Era = "20th Century" },
             new Mathematician { Id = 5, Slug = "terence-tao", Name = "Terence Tao", BornYear = 1975, DiedYear = null, Nationality = "Australian-American", Biography = "Fields Medalist with monumental breakthroughs across harmonic analysis, PDE, combinatorics, and number theory.", KeyContributions = new() { "Green-Tao Theorem", "Collatz almost-all-orbits result", "Compressed sensing" }, Era = "Contemporary" }
         };
-        context.Mathematicians.AddRange(mathematicians);
+
+        foreach (var m in mathematicians)
+        {
+            if (!await context.Mathematicians.AnyAsync(x => x.Slug == m.Slug))
+            {
+                if (await context.Mathematicians.AnyAsync()) m.Id = 0;
+                context.Mathematicians.Add(m);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 4. PROBLEMS
@@ -413,10 +444,81 @@ public static class DatabaseSeeder
                 Tags = new() { "Solved", "Number Theory", "Elliptic Curves", "Modularity" },
                 ClaimedSolutions = new() { "Wiles' proof accepted 1995." },
                 HistoricalStatuses = new() { "1637: Conjectured by Fermat", "1994: Solved by Andrew Wiles" }
+            },
+            new Problem
+            {
+                Id = 12,
+                Slug = "hodge-conjecture",
+                Title = "Hodge Conjecture",
+                ShortDescription = "On projective complex algebraic varieties, Hodge classes are rational linear combinations of algebraic cycles.",
+                FullDescription = "Posed by W. V. D. Hodge in 1950, this Clay Millennium Problem asserts that for projective algebraic varieties, topological information (Hodge de Rham cohomology classes) can be completely realized by geometric algebraic subvarieties.",
+                Field = "Algebraic Geometry & Complex Geometry",
+                CategoryId = catGeometry.Id,
+                Status = ProblemStatus.OPEN,
+                Difficulty = DifficultyLevel.Extreme,
+                YearIntroduced = 1950,
+                LastVerified = "2026-03-01",
+                StatusSource = "Clay Mathematics Institute",
+                SourceType = "Official Millennium Prize Problem",
+                StatusNotes = "Clay Millennium Problem. OPEN. Known for dimension <= 3 and for divisors (Lefschetz (1,1)-theorem), but open in general.",
+                MathematicalStatement = @"\text{Let } X \text{ be a non-singular complex projective manifold. Every Hodge class in } H^{2k}(X, \mathbb{Q}) \cap H^{k,k}(X) \text{ is a rational linear combination of cohomology classes of algebraic cycles.}",
+                Intuition = "Can the topological shape of an algebraic space always be constructed purely out of geometric algebraic shapes (zero sets of polynomials)? Hodge conjectured that specific harmonic differential forms always correspond to algebraic subvarieties.",
+                WhyItMatters = "Provides the foundational link between topology, analysis (differential forms), and algebraic geometry (zero sets of polynomials).",
+                WhatWeKnow = new() { "Proved for degree (1,1) classes by the Lefschetz (1,1) theorem (1924).", "Proved for varieties of dimension at most 3.", "Integral Hodge conjecture is known to be false (Atiyah-Hirzebruch counterexample), but the rational Hodge conjecture remains open." },
+                WhatWeDontKnow = new() { "Whether Hodge classes of codimension >= 2 on arbitrary projective varieties are algebraic with rational coefficients." },
+                PartialResults = new() { "Lefschetz (1,1)-theorem: All (1,1) integral classes are algebraic.", "Deligne (1971): Proved Hodge theory for singular varieties." },
+                CommonMisconceptions = new() { "The conjecture applies with integer coefficients. (False: Counterexamples by Atiyah & Hirzebruch require rational coefficients Q)." },
+                History = "Formulated by W. V. D. Hodge at the 1950 International Congress of Mathematicians in Cambridge, Massachusetts. Selected as a Clay Millennium Problem in 2000.",
+                VisualizationSlug = null,
+                HasExperiment = false,
+                RelatedProblems = new() { "poincare-conjecture", "birch-swinnerton-dyer" },
+                SourceIds = new() { 1 },
+                Tags = new() { "Millennium Problem", "Algebraic Geometry", "Cohomology", "Differential Forms" },
+                ClaimedSolutions = new() {},
+                HistoricalStatuses = new() { "1950: Conjectured by W. V. D. Hodge", "2000: Clay Millennium Prize Problem" }
+            },
+            new Problem
+            {
+                Id = 13,
+                Slug = "yang-mills-mass-gap",
+                Title = "Yang–Mills Existence and Mass Gap",
+                ShortDescription = "Prove that quantum Yang-Mills theory exists on R^4 and predicts a strictly positive mass gap Delta > 0.",
+                FullDescription = "Formulated by Chen Ning Yang and Robert Mills in 1954, non-abelian gauge theory forms the foundation of the Standard Model of particle physics. The mathematical problem is to provide a rigorous axiomatic quantum field theory and prove that the lightest gauge particle has strictly positive mass.",
+                Field = "Quantum Field Theory & Mathematical Physics",
+                CategoryId = catPhysics.Id,
+                Status = ProblemStatus.OPEN,
+                Difficulty = DifficultyLevel.Extreme,
+                YearIntroduced = 1954,
+                LastVerified = "2026-03-01",
+                StatusSource = "Clay Mathematics Institute / Jaffe-Witten",
+                SourceType = "Official Millennium Prize Problem",
+                StatusNotes = "Clay Millennium Problem. OPEN. Supported by lattice QCD simulations and physical experiments, but no mathematically rigorous proof exists in 4D Minkowski space.",
+                MathematicalStatement = @"\exists \Delta > 0 \text{ such that every state } \psi \text{ orthogonal to the vacuum } \Omega \text{ satisfies } H \psi \ge \Delta \psi",
+                Intuition = "Gluons that carry the strong nuclear force are massless in classical physics, yet nuclear forces have a finite range and bound states (glueballs) have massive weight. Why does a quantum theory of massless particles spontaneously acquire a mass barrier?",
+                WhyItMatters = "Explains confinement of quarks, the stability of atomic nuclei, and places relativistic quantum field theory on rigorous mathematical footing.",
+                WhatWeKnow = new() { "Rigorous constructive quantum field theory exists in 2D and 3D spacetime.", "Lattice gauge theory confirms the mass gap numerically to high precision.", "Asymptotic freedom proved by Gross, Wilczek, and Politzer (Nobel Prize 2004)." },
+                WhatWeDontKnow = new() { "Rigorous mathematical construction of 4D non-abelian quantum gauge theory.", "Mathematical proof of confinement and the positive mass gap." },
+                PartialResults = new() { "Wightman axioms and Osterwalder-Schrader reconstruction established.", "Constructive field theory successes in lower dimensions (Glimm-Jaffe)." },
+                CommonMisconceptions = new() { "Because physicists use Yang-Mills every day, it is already mathematically proven. (False: The mathematical continuum limit remains non-rigorous)." },
+                History = "Introduced by Yang and Mills (1954). Jaffe and Witten authored the official Clay Millennium problem description in 2000.",
+                VisualizationSlug = null,
+                HasExperiment = false,
+                RelatedProblems = new() { "navier-stokes-smoothness" },
+                SourceIds = new() { 1 },
+                Tags = new() { "Millennium Problem", "Quantum Physics", "Gauge Theory", "Mass Gap" },
+                ClaimedSolutions = new() {},
+                HistoricalStatuses = new() { "1954: Formulated by Yang and Mills", "2000: Clay Millennium Prize Problem" }
             }
         };
 
-        context.Problems.AddRange(problems);
+        foreach (var p in problems)
+        {
+            if (!await context.Problems.AnyAsync(x => x.Slug == p.Slug))
+            {
+                if (await context.Problems.AnyAsync()) p.Id = 0;
+                context.Problems.Add(p);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 5. MATHEMATICAL WONDERS
@@ -561,10 +663,237 @@ public static class DatabaseSeeder
                 ExperimentSlug = "hyperbolic-geometry",
                 Tags = new() { "Geometry", "Non-Euclidean", "Poincaré Disk", "Curvature" },
                 Sources = new() { "Lobachevsky, N. I. (1829). 'On the Principles of Geometry'", "Bolyai, J. (1832). 'The Science of Absolute Space'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 8,
+                Slug = "zenos-paradoxes",
+                Title = "Zeno's Paradoxes",
+                ShortDescription = "Ancient philosophical paradoxes questioning the reality of motion, continuous space, and infinite divisibility.",
+                FullDescription = "Devised by Zeno of Elea around 450 BCE to support Parmenides' doctrine that all is one and motion is an illusion. The famous paradoxes—Achilles and the Tortoise, the Dichotomy, and the Arrow—challenged human intuition for millennia until calculus and real analysis resolved infinite series convergence.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "Achilles can never overtake a tortoise with a head start: before overtaking it, he must reach where it started; by then, the tortoise has moved ahead. An infinite sequence of tasks must be completed in finite time! Calculus answers: an infinite sum of shrinking time intervals converges to a finite number.",
+                Mathematics = @"The infinite sequence of distances d_n = d_0 \cdot r^n (with speed ratio r < 1) yields total distance S = \sum_{n=0}^{\infty} d_0 r^n = \frac{d_0}{1 - r}. In the Dichotomy paradox: \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n = \frac{1/2}{1 - 1/2} = 1.",
+                Properties = new() { "Infinite series convergence", "Sum of infinite non-zero intervals can be strictly finite", "Geometric progression: S = a / (1 - r)", "Calculus resolution of instantaneous velocity via limits: v(t) = ds/dt = lim_{dt -> 0} ds/dt" },
+                ConstructionSteps = new() { "1. Give the Tortoise a 100-meter head start.", "2. Achilles runs 10x faster than the tortoise.", "3. When Achilles runs 100m, Tortoise moves 10m.", "4. When Achilles runs 10m, Tortoise moves 1m.", "5. Sum: 100 + 10 + 1 + 0.1 + ... = 100 / (1 - 0.1) = 111.11... meters.", "6. Achilles passes the tortoise at exactly t = 11.11 seconds." },
+                ParametricEquations = @"x_A(t) = v_A \cdot t, \quad x_T(t) = x_0 + v_T \cdot t, \quad t_{\text{catch}} = \frac{x_0}{v_A - v_T}",
+                VisualizationSlug = "zenos-paradoxes",
+                HasExperiment = true,
+                ExperimentSlug = "zenos-paradoxes",
+                Tags = new() { "Infinity", "Paradox", "Calculus", "Series", "Interactive Lab" },
+                Sources = new() { "Aristotle, Physics VI:9", "Russell, Bertrand (1903). 'The Principles of Mathematics'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 9,
+                Slug = "projective-plane",
+                Title = "Real Projective Plane (Cross-Cap)",
+                ShortDescription = "A non-orientable surface with Euler characteristic 1 that cannot be embedded in 3D without self-intersection.",
+                FullDescription = "The real projective plane RP^2 is the topological space of lines through the origin in R^3. Topologically, it is formed by taking a 2-sphere and identifying antipodal points, or gluing a disk to the boundary of a Möbius strip.",
+                CategoryId = catTopology.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "Imagine standing in the center of a sphere: every line of sight connects two opposite antipodal points. If you decree that opposite points are actually the exact same location, you get the projective plane.",
+                Mathematics = @"\mathbb{RP}^2 = (S^2)/_{\sim}, \text{ where } x \sim -x. \text{ Euler characteristic } \chi = 1, \pi_1(\mathbb{RP}^2) = \mathbb{Z}_2. Cross-cap immersion: x = r \sin(2u) \sin^2(v), y = r \sin(u) \cos(2v), z = r \cos(u) \cos(2v).",
+                Properties = new() { "Non-orientable compact 2-manifold without boundary", "Euler characteristic chi = 1", "Fundamental group pi_1 = Z_2", "Non-embeddable in R^3 (immersion has self-intersection line)" },
+                ConstructionSteps = new() { "1. Take a northern hemisphere of S^2.", "2. Identify opposite boundary points on the equator.", "3. Equivalently, sew a disk onto the boundary of a Möbius strip." },
+                ParametricEquations = @"x(u,v) = \frac{1}{2} \sin(2u) \sin^2(v), \quad y(u,v) = \sin(u) \cos(2v), \quad z(u,v) = \cos(u) \cos(2v)",
+                VisualizationSlug = "projective-plane",
+                HasExperiment = true,
+                ExperimentSlug = "projective-plane",
+                Tags = new() { "Topology", "Non-orientable", "Projective Geometry", "Interactive 3D" },
+                Sources = new() { "Boy, Werner (1901)", "Hilbert & Cohn-Vossen (1932)" }
+            },
+            new MathematicalWonder
+            {
+                Id = 10,
+                Slug = "cantors-diagonal-argument",
+                Title = "Cantor's Diagonal Argument",
+                ShortDescription = "A proof that the real numbers are strictly more numerous than the integers: uncountability of the continuum.",
+                FullDescription = "Published in 1891 by Georg Cantor, the diagonal argument proved that the set of real numbers is uncountable, establishing that infinity has different magnitudes and revolutionizing mathematical logic.",
+                CategoryId = catLogic.Id,
+                Status = ProblemStatus.THEOREM,
+                Intuition = "Assume you could write an exhaustive list of every real number between 0 and 1. Cantor constructs a new number by taking the first digit of the 1st number and altering it, the second digit of the 2nd number and altering it, and so on. This new diagonal number differs from EVERY number on your list by at least one digit!",
+                Mathematics = @"\text{For any enumeration } f: \mathbb{N} \to (0, 1), \text{ define } d \in (0, 1) \text{ with digit } d_n = (f(n)_n + 1) \pmod{10}. \forall k, d \ne f(k), \text{ so } f \text{ cannot be surjective. Hence } |\mathbb{R}| > |\mathbb{N}|.",
+                Properties = new() { "Cardinality |R| = 2^{aleph_0} > aleph_0", "Constructive refutation of countability", "Foundation of Turing's halting proof and Gödel's incompleteness" },
+                ConstructionSteps = new() { "1. List reals: r_1, r_2, r_3, ...", "2. Look at the diagonal digits: r_1[1], r_2[2], r_3[3], ...", "3. Invert each diagonal digit: d_n = 1 - r_n[n].", "4. Number d cannot be on the list, contradiction!" },
+                ParametricEquations = @"d_n = 1 - s_{n,n} \quad \text{for binary sequences}",
+                VisualizationSlug = "cantors-diagonal-argument",
+                HasExperiment = true,
+                ExperimentSlug = "cantors-diagonal-argument",
+                Tags = new() { "Infinity", "Set Theory", "Theorem", "Cantor", "Interactive Lab" },
+                Sources = new() { "Cantor, Georg (1891). 'Über eine elementare Frage der Mannigfaltigkeitslehre'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 11,
+                Slug = "birthday-paradox",
+                Title = "The Birthday Paradox",
+                ShortDescription = "In a group of only 23 people, there is a greater than 50% probability that at least two share the same birthday.",
+                FullDescription = "A celebrated veridical paradox of probability theory. Despite intuition suggesting you need around 183 people (half of 365) to get a 50% chance of a shared birthday, only 23 people are required because the number of possible pairs grows quadratically as n(n-1)/2.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "You aren't asking if someone has YOUR birthday (which would take ~253 people for 50%). You are asking if ANY two people share ANY birthday. 23 people generate 23 * 22 / 2 = 253 pairwise comparisons!",
+                Mathematics = @"P(\text{match}) = 1 - \bar{P} = 1 - \prod_{k=0}^{n-1} \left(1 - \frac{k}{365}\right) \approx 1 - e^{-\frac{n(n-1)}{2 \times 365}}. \text{ For } n = 23, P \approx 50.73\%. \text{ For } n = 70, P \approx 99.9\%.",
+                Properties = new() { "Combinatorial explosion of pairs", "Quadratic growth: n(n-1)/2", "Direct cryptographic application: Birthday Attacks on hash functions (SHA, MD5)" },
+                ConstructionSteps = new() { "1. Person 1 has 365/365 available birthdays.", "2. Person 2 has 364/365 to avoid collision.", "3. Person 3 has 363/365, etc.", "4. Multiply probabilities of no collision.", "5. Subtract from 1." },
+                ParametricEquations = @"P(n) = 1 - \frac{365!}{365^n (365-n)!}",
+                VisualizationSlug = "birthday-paradox",
+                HasExperiment = true,
+                ExperimentSlug = "birthday-paradox",
+                Tags = new() { "Probability", "Paradox", "Combinatorics", "Cryptography", "Interactive Lab" },
+                Sources = new() { "von Mises, Richard (1939)", "Feller, William (1968). 'An Introduction to Probability Theory'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 12,
+                Slug = "monty-hall-problem",
+                Title = "The Monty Hall Problem",
+                ShortDescription = "Switching doors after the host reveals a goat doubles your probability of winning the car from 1/3 to 2/3.",
+                FullDescription = "Based on the American television show 'Let's Make a Deal' hosted by Monty Hall, and analyzed famously by Marilyn vos Savant in 1990. Contestants choose one of three doors. The host, knowing what is behind each door, opens one of the remaining two to reveal a goat. Switching doubles your winning chances.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "When you first picked, you had a 1/3 chance of picking the car and a 2/3 chance of picking a goat. If you picked a goat (which happens 2/3 of the time), Monty is forced to reveal the other goat, so switching is 100% guaranteed to win the car!",
+                Mathematics = @"P(\text{Win} \mid \text{Stay}) = \frac{1}{3}. \quad P(\text{Win} \mid \text{Switch}) = 1 - \frac{1}{3} = \frac{2}{3}. \text{ By Bayes' Theorem: } P(C_2 \mid D_3) = \frac{P(D_3 \mid C_2) P(C_2)}{P(D_3)} = \frac{1 \times 1/3}{1/2} = \frac{2}{3}.",
+                Properties = new() { "Conditional probability & Bayes' theorem", "Asymmetric information: host's choice is not random", "Frequentist Monte Carlo convergence to 66.7% vs 33.3%" },
+                ConstructionSteps = new() { "1. 3 doors: 1 car, 2 goats.", "2. Contestant picks Door 1 (1/3 car, 2/3 goat).", "3. Host opens Door 3 showing goat.", "4. Contestant switches to Door 2: wins 2/3 of the time." },
+                ParametricEquations = @"P(\text{Win switch}) = \frac{N-1}{N} \quad \text{for } N \text{ doors}",
+                VisualizationSlug = "monty-hall-problem",
+                HasExperiment = true,
+                ExperimentSlug = "monty-hall-problem",
+                Tags = new() { "Probability", "Paradox", "Bayesian", "Game Theory", "Interactive Lab" },
+                Sources = new() { "Selvin, Steve (1975). 'A problem in probability'", "vos Savant, Marilyn (1990). 'Ask Marilyn'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 13,
+                Slug = "gabriels-horn",
+                Title = "Gabriel's Horn (Torricelli's Trumpet)",
+                ShortDescription = "A geometric surface of revolution with finite volume (pi) but infinite surface area.",
+                FullDescription = "Discovered in 1641 by Italian mathematician Evangelista Torricelli. Revolving the curve y = 1/x from x = 1 to infinity about the x-axis produces a trumpet-shaped solid with a finite volume of pi, yet an infinite surface area.",
+                CategoryId = catAnalysis.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "Painter's paradox: You could completely fill the inside of the horn with a finite can of paint (pi cubic units), yet that exact same amount of paint would not be enough to coat the inside surface of the horn!",
+                Mathematics = @"V = \pi \int_{1}^{\infty} \left(\frac{1}{x}\right)^2 dx = \pi \left[ -\frac{1}{x} \right]_1^{\infty} = \pi < \infty. \quad A = 2\pi \int_{1}^{\infty} \frac{1}{x}\sqrt{1 + \frac{1}{x^4}} dx > 2\pi \int_1^{\infty} \frac{1}{x} dx = \infty.",
+                Properties = new() { "Finite volume = pi", "Infinite surface area (harmonic divergence)", "Calculus paradox of improper integrals", "Painter's paradox" },
+                ConstructionSteps = new() { "1. Plot curve y = 1/x for x in [1, inf).", "2. Revolve curve 360 degrees around x-axis.", "3. Integrate cross-sectional disks: V = pi.", "4. Integrate surface strips: diverges logarithmically to infinity." },
+                ParametricEquations = @"x(u, v) = u, \quad y(u, v) = \frac{1}{u} \cos v, \quad z(u, v) = \frac{1}{u} \sin v, \quad u \ge 1",
+                VisualizationSlug = "gabriels-horn",
+                HasExperiment = true,
+                ExperimentSlug = "gabriels-horn",
+                Tags = new() { "Calculus", "Analysis", "Paradox", "Integrals", "Interactive 3D" },
+                Sources = new() { "Torricelli, Evangelista (1644). 'De solido hyperbolico acuto'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 14,
+                Slug = "julia-set",
+                Title = "Julia Sets",
+                ShortDescription = "Complex fractal boundaries formed by repeating z -> z^2 + c for fixed parameter c.",
+                FullDescription = "Investigated by Gaston Julia and Pierre Fatou in 1918, Julia sets are the dynamical twin of the Mandelbrot set. While the Mandelbrot set maps parameter c, a Julia set shows the dynamics in the z-plane for a fixed c.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "Pick any single point c in the Mandelbrot set. It generates an entire Julia fractal universe! If c is inside the Mandelbrot set, its Julia set is connected; if outside, it explodes into Cantor dust.",
+                Mathematics = @"J_c = \partial \{ z_0 \in \mathbb{C} \mid \sup_n |f_c^n(z_0)| < \infty \}, \text{ where } f_c(z) = z^2 + c.",
+                Properties = new() { "Connected if and only if c in Mandelbrot set M", "Self-similar under backward iterations", "Chaotic repeller for polynomial dynamics" },
+                ConstructionSteps = new() { "1. Fix complex constant c.", "2. For every pixel z = x + iy, iterate z -> z^2 + c.", "3. Test if |z| > 2 (escapes).", "4. Color by iteration count." },
+                ParametricEquations = @"z_{n+1} = z_n^2 + c",
+                VisualizationSlug = "julia-set",
+                HasExperiment = true,
+                ExperimentSlug = "fractal-lab",
+                Tags = new() { "Fractals", "Complex Dynamics", "Chaos", "Interactive Lab" },
+                Sources = new() { "Julia, Gaston (1918). 'Mémoire sur l'itération des fonctions rationnelles'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 15,
+                Slug = "sierpinski-triangle",
+                Title = "Sierpiński Triangle",
+                ShortDescription = "A fractal triangle with fractional Hausdorff dimension log(3)/log(2) ~ 1.585 and zero area.",
+                FullDescription = "Introduced by Wacław Sierpiński in 1915, this self-similar fractal is constructed by recursively removing the central inverted equilateral triangle from each triangular stage.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "Start with a solid triangle. Remove the middle quarter. Repeat on the 3 remaining triangles forever. At infinity, the remaining dust has zero area, yet its perimeter is infinite, and it forms a connected fractal maze.",
+                Mathematics = @"\text{Hausdorff dimension: } d = \frac{\log 3}{\log 2} \approx 1.58496. \text{ Area: } A_n = A_0 \left(\frac{3}{4}\right)^n \to 0. \text{ Perimeter: } P_n = P_0 \left(\frac{3}{2}\right)^n \to \infty.",
+                Properties = new() { "Hausdorff dimension log 3 / log 2 ~ 1.585", "Zero Lebesgue measure (Area = 0)", "Infinite perimeter", "Can be generated via Chaos Game or Pascal's Triangle mod 2" },
+                ConstructionSteps = new() { "1. Start with an equilateral triangle.", "2. Connect the midpoints of the three edges.", "3. Remove the central triangle.", "4. Recursively repeat on the 3 remaining smaller triangles." },
+                ParametricEquations = @"f_1(x) = x/2, \quad f_2(x) = x/2 + (1/2, 0), \quad f_3(x) = x/2 + (1/4, \sqrt{3}/4)",
+                VisualizationSlug = "sierpinski-triangle",
+                HasExperiment = true,
+                ExperimentSlug = "fractal-lab",
+                Tags = new() { "Fractals", "Geometry", "Hausdorff Dimension", "Chaos Game" },
+                Sources = new() { "Sierpiński, W. (1915). 'Sur une nouvelle courbe continue qui remplit toute une aire plane'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 16,
+                Slug = "koch-snowflake",
+                Title = "Koch Snowflake",
+                ShortDescription = "A continuous nowhere-differentiable fractal curve enclosing a finite area within an infinite perimeter.",
+                FullDescription = "Introduced by Helge von Koch in 1904, the Koch snowflake is one of the earliest fractals. Beginning with an equilateral triangle, each line segment has its middle third replaced by a triangular tent.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "A finite island with an infinite shoreline! You can cover the snowflake with a finite circular fence, yet walking along every bay and inlet of its perimeter would require walking an infinite distance.",
+                Mathematics = @"\text{Perimeter: } P_n = 3s \left(\frac{4}{3}\right)^n \to \infty. \text{ Area: } A_\infty = \frac{8}{5} A_0. \text{ Dimension: } d = \frac{\log 4}{\log 3} \approx 1.26186.",
+                Properties = new() { "Infinite perimeter", "Finite area = 8/5 * Area_0", "Continuous everywhere, differentiable nowhere", "Hausdorff dimension log 4 / log 3 ~ 1.262" },
+                ConstructionSteps = new() { "1. Start with an equilateral triangle.", "2. Divide each segment into three equal parts.", "3. Construct an outward equilateral triangle on the middle part.", "4. Remove the base of the new triangle.", "5. Repeat indefinitely." },
+                ParametricEquations = @"L_n = L_0 \left(\frac{4}{3}\right)^n",
+                VisualizationSlug = "koch-snowflake",
+                HasExperiment = true,
+                ExperimentSlug = "fractal-lab",
+                Tags = new() { "Fractals", "Geometry", "Infinite Perimeter", "Nowhere Differentiable" },
+                Sources = new() { "von Koch, H. (1904). 'Sur une courbe continue sans tangente, obtenue par une construction géométrique élémentaire'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 17,
+                Slug = "cantor-set",
+                Title = "The Cantor Set (Cantor Dust)",
+                ShortDescription = "A subset of the unit interval that is uncountably infinite, nowhere dense, and has measure zero.",
+                FullDescription = "Introduced by Georg Cantor in 1883, the ternary Cantor set is constructed by repeatedly removing the open middle third of each interval segment. It possesses the same number of points as the entire continuous real line, yet occupies zero length.",
+                CategoryId = catAnalysis.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "Throw away 1/3 of the line, then 2/9, then 4/27... The total length of the removed pieces sums to exactly 1! Yet infinitely many points remain—in fact, exactly as many as were there at the beginning!",
+                Mathematics = @"C = [0, 1] \setminus \bigcup_{n=1}^\infty \bigcup_{k=0}^{3^{n-1}-1} \left( \frac{3k+1}{3^n}, \frac{3k+2}{3^n} \right). \text{ Total length removed } = \sum_{n=1}^\infty \frac{2^{n-1}}{3^n} = 1. |C| = 2^{\aleph_0}, \dim_H(C) = \frac{\log 2}{\log 3} \approx 0.6309.",
+                Properties = new() { "Lebesgue measure = 0", "Uncountable cardinality (equinumerous with R)", "Compact, totally disconnected, and perfect", "Hausdorff dimension log 2 / log 3 ~ 0.631" },
+                ConstructionSteps = new() { "1. Start with interval [0, 1].", "2. Remove middle third (1/3, 2/3).", "3. Repeat on [0, 1/3] and [2/3, 1].", "4. What remains consists of numbers whose base-3 expansion has no 1s." },
+                ParametricEquations = @"C = \left\{ x = \sum_{k=1}^\infty \frac{a_k}{3^k} : a_k \in \{0, 2\} \right\}",
+                VisualizationSlug = "cantor-set",
+                HasExperiment = true,
+                ExperimentSlug = "fractal-lab",
+                Tags = new() { "Set Theory", "Analysis", "Topology", "Measure Zero", "Uncountable" },
+                Sources = new() { "Cantor, Georg (1883). 'Über unendliche, lineare Punktmannigfaltigkeiten'" }
+            },
+            new MathematicalWonder
+            {
+                Id = 18,
+                Slug = "dragon-curve",
+                Title = "The Heighway Dragon Curve",
+                ShortDescription = "A self-similar space-filling fractal curve generated by repeatedly folding a strip of paper in half.",
+                FullDescription = "Discovered by NASA physicists John Heighway, Bruce Banks, and William Harter in 1966, and popularized by Martin Gardner in Scientific American. It can be constructed by repeatedly folding a paper strip in half in the same direction, then unfolding every fold to 90 degrees.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PHENOMENON,
+                Intuition = "Fold a strip of paper in half 12 times. Unfold each crease to a 90-degree right angle and look at it from above: a breathtaking, labyrinthine dragon appears that never self-intersects and tiles the plane seamlessly.",
+                Mathematics = @"\text{Boundary Hausdorff dimension: } \approx 1.523627. \text{ Area of dragon: exactly equal to the initial segment length squared } / 2. \text{ Tiling: Four dragons meet at a central point to tile } \mathbb{R}^2.",
+                Properties = new() { "Paper-folding sequence of 0s and 1s", "Self-similar with 45-degree rotation scaling by 1/sqrt(2)", "Tiles the 2D plane perfectly without gaps or overlap" },
+                ConstructionSteps = new() { "1. Fold strip of paper in half.", "2. Fold in half again in same direction.", "3. Unfold each fold to 90 degrees.", "4. Sequence of turns: R, R, L, R, R, L, L, ..." },
+                ParametricEquations = @"f_1(z) = \frac{1+i}{2} z, \quad f_2(z) = 1 - \frac{1-i}{2} z",
+                VisualizationSlug = "dragon-curve",
+                HasExperiment = true,
+                ExperimentSlug = "fractal-lab",
+                Tags = new() { "Fractals", "Paper Folding", "L-System", "Plane Tiling" },
+                Sources = new() { "Gardner, Martin (1967). 'Mathematical Games', Scientific American", "Davis, Chandler & Knuth, Donald (1970)" }
             }
         };
 
-        context.Wonders.AddRange(wonders);
+        foreach (var w in wonders)
+        {
+            if (!await context.Wonders.AnyAsync(x => x.Slug == w.Slug))
+            {
+                if (await context.Wonders.AnyAsync()) w.Id = 0;
+                context.Wonders.Add(w);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 6. TIMELINE EVENTS
@@ -587,7 +916,14 @@ public static class DatabaseSeeder
             new TimelineEvent { Id = 15, Year = 2013, DateDisplay = "2013", Title = "Zhang & Maynard Bound Prime Gaps", Description = "Yitang Zhang proves prime gaps < 70 million infinitely often; James Maynard and Polymath8 subsequently reduce the bound to 246.", Significance = "Sensational breakthrough on the Twin Prime Conjecture.", Category = "Number Theory", RelatedProblemSlug = "twin-prime-conjecture" }
         };
 
-        context.TimelineEvents.AddRange(timelineEvents);
+        foreach (var t in timelineEvents)
+        {
+            if (!await context.TimelineEvents.AnyAsync(x => x.Title == t.Title))
+            {
+                if (await context.TimelineEvents.AnyAsync()) t.Id = 0;
+                context.TimelineEvents.Add(t);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 7. VISUALIZATIONS
@@ -603,10 +939,30 @@ public static class DatabaseSeeder
             new Visualization { Id = 8, Slug = "collatz-conjecture", Title = "Collatz Trajectory Explorer", Description = "Interactive 3n+1 sequence plotter with stopping time, maximum excursion, and multi-number comparison.", Type = VisualizationType.InteractiveSvg, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 9, Slug = "goldbach-conjecture", Title = "Goldbach Decomposition Lab", Description = "Interactive even integer decomposition calculator with prime pair distribution and Goldbach comet.", Type = VisualizationType.InteractiveSvg, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 10, Slug = "twin-prime-conjecture", Title = "Twin Prime Sieve Explorer", Description = "Interactive prime number line highlighting (p, p+2) pairs and prime gap density.", Type = VisualizationType.InteractiveSvg, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
-            new Visualization { Id = 11, Slug = "riemann-hypothesis", Title = "Riemann Zeta Zero Spectrum", Description = "Complex plane visualizer with critical strip, critical line Re(s) = 1/2, and known non-trivial zeros.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } }
+            new Visualization { Id = 11, Slug = "riemann-hypothesis", Title = "Riemann Zeta Zero Spectrum", Description = "Complex plane visualizer with critical strip, critical line Re(s) = 1/2, and known non-trivial zeros.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 12, Slug = "zenos-paradoxes", Title = "Zeno's Paradoxes Interactive Laboratory", Description = "Achilles & Tortoise animated race, Dichotomy geometric series bar convergence, and Arrow instantaneous velocity limit.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 13, Slug = "projective-plane", Title = "Real Projective Plane (Cross-Cap) 3D", Description = "Interactive 3D parametric cross-cap model of RP^2 illustrating antipodal quotient and non-orientability.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 14, Slug = "cantors-diagonal-argument", Title = "Cantor's Diagonal Argument Visualizer", Description = "Interactive binary sequence table demonstrating diagonal bit inversion and uncountability of reals.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 15, Slug = "birthday-paradox", Title = "Birthday Paradox Simulator & Calculator", Description = "Interactive room size slider, exact collision probability curve, and Monte Carlo multi-trial generator.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 16, Slug = "monty-hall-problem", Title = "Monty Hall 3-Door Simulation & Monte Carlo", Description = "Interactive 3-door game showing switch vs stay strategies with live frequentist convergence.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 17, Slug = "gabriels-horn", Title = "Gabriel's Horn 3D Surface of Revolution", Description = "Interactive 3D horn y = 1/x demonstrating finite volume versus infinite surface area.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 18, Slug = "p-vs-np", Title = "P vs NP Verification vs Search Complexity Lab", Description = "Interactive complexity class visualizer and verification vs search demonstrator.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 19, Slug = "poincare-conjecture", Title = "Poincaré Conjecture 3-Sphere Surgery Visualizer", Description = "Ricci flow neckpinch singularity surgery and simply connected loop shrinking visualizer.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 20, Slug = "julia-set", Title = "Julia Sets Complex Plane Dynamics", Description = "Interactive Julia set fractal with custom parameter explorer linked to the Mandelbrot plane.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 21, Slug = "sierpinski-triangle", Title = "Sierpiński Triangle Recursive IFS", Description = "Recursive removal and chaos game generation of the Sierpiński gasket.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
+            new Visualization { Id = 22, Slug = "koch-snowflake", Title = "Koch Snowflake Infinite Shoreline", Description = "Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
+            new Visualization { Id = 23, Slug = "cantor-set", Title = "Cantor Set Middle-Third Construction", Description = "Stage-by-stage removal of the middle third illustrating measure zero and uncountability.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
+            new Visualization { Id = 24, Slug = "dragon-curve", Title = "Heighway Dragon Paper-Folding Fractal", Description = "Recursive paper-folding turn generator and plane-tiling 2D fractal curve.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } }
         };
 
-        context.Visualizations.AddRange(visualizations);
+        foreach (var v in visualizations)
+        {
+            if (!await context.Visualizations.AnyAsync(x => x.Slug == v.Slug))
+            {
+                if (await context.Visualizations.AnyAsync()) v.Id = 0;
+                context.Visualizations.Add(v);
+            }
+        }
         await context.SaveChangesAsync();
 
         // 8. TAGS
@@ -621,10 +977,20 @@ public static class DatabaseSeeder
             new Tag { Id = 7, Slug = "undecidable", Name = "Undecidable" },
             new Tag { Id = 8, Slug = "independent", Name = "Independent" },
             new Tag { Id = 9, Slug = "interactive-3d", Name = "Interactive 3D" },
-            new Tag { Id = 10, Slug = "fractals", Name = "Fractals" }
+            new Tag { Id = 10, Slug = "fractals", Name = "Fractals" },
+            new Tag { Id = 11, Slug = "paradox", Name = "Paradox" },
+            new Tag { Id = 12, Slug = "calculus", Name = "Calculus" },
+            new Tag { Id = 13, Slug = "probability", Name = "Probability" }
         };
 
-        context.Tags.AddRange(tags);
+        foreach (var tag in tags)
+        {
+            if (!await context.Tags.AnyAsync(x => x.Slug == tag.Slug))
+            {
+                if (await context.Tags.AnyAsync()) tag.Id = 0;
+                context.Tags.Add(tag);
+            }
+        }
         await context.SaveChangesAsync();
     }
 }

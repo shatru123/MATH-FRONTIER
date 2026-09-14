@@ -3,10 +3,14 @@ import { ZoomIn, ZoomOut, RotateCcw, Sparkles, Sliders } from 'lucide-react';
 import { mandelbrotIteration, juliaIteration, kochIteration } from '../../utils/mathUtils';
 import { KaTeXMath } from '../common/KaTeXMath';
 
-type FractalType = 'mandelbrot' | 'julia' | 'sierpinski' | 'koch' | 'cantor' | 'dragon';
+export type FractalType = 'mandelbrot' | 'julia' | 'sierpinski' | 'koch' | 'cantor' | 'dragon';
 
-export const FractalLab: React.FC = () => {
-  const [fractalType, setFractalType] = useState<FractalType>('mandelbrot');
+interface FractalLabProps {
+  initialType?: FractalType;
+}
+
+export const FractalLab: React.FC<FractalLabProps> = ({ initialType = 'mandelbrot' }) => {
+  const [fractalType, setFractalType] = useState<FractalType>(initialType);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // View parameters for Mandelbrot & Julia

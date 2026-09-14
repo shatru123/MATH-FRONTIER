@@ -59,6 +59,7 @@ public class ProblemRepository : IProblemRepository
     public async Task<Problem?> GetBySlugAsync(string slug)
     {
         var slugLower = slug.ToLower();
+        if (slugLower == "navier-stokes") slugLower = "navier-stokes-smoothness";
         return await _context.Problems
             .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Slug.ToLower() == slugLower);
@@ -97,6 +98,7 @@ public class WonderRepository : IWonderRepository
     public async Task<MathematicalWonder?> GetBySlugAsync(string slug)
     {
         var slugLower = slug.ToLower();
+        if (slugLower == "banach-tarski") slugLower = "banach-tarski-paradox";
         return await _context.Wonders
             .Include(w => w.Category)
             .FirstOrDefaultAsync(w => w.Slug.ToLower() == slugLower);
@@ -120,6 +122,8 @@ public class VisualizationRepository : IVisualizationRepository
     public async Task<Visualization?> GetBySlugAsync(string slug)
     {
         var slugLower = slug.ToLower();
+        if (slugLower == "banach-tarski-paradox") slugLower = "banach-tarski";
+        if (slugLower == "navier-stokes-smoothness") slugLower = "navier-stokes";
         return await _context.Visualizations.FirstOrDefaultAsync(v => v.Slug.ToLower() == slugLower);
     }
 }

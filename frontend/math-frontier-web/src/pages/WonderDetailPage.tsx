@@ -6,6 +6,7 @@ import { api } from '../services/api';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { IntuitionVsMath } from '../components/common/IntuitionVsMath';
 import { KaTeXMath } from '../components/common/KaTeXMath';
+import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { getVisualizationComponent } from '../components/visualizations/registry';
 
 export const WonderDetailPage: React.FC = () => {
@@ -81,19 +82,29 @@ export const WonderDetailPage: React.FC = () => {
       </section>
 
       {/* 3D or 2D Interactive Scene */}
-      {VizComponent && (
+      {VizComponent ? (
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-cinzel text-xl font-bold text-slate-100 flex items-center gap-2">
               <Compass className="w-5 h-5 text-cyan-400" />
-              Interactive 3D Laboratory
+              Interactive Exhibit Laboratory
             </h2>
             <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">Live Model</span>
           </div>
 
-          <VizComponent />
+          <ErrorBoundary fallbackTitle="Interactive visualization could not be initialized.">
+            <VizComponent />
+          </ErrorBoundary>
         </section>
-      )}
+      ) : wonder.visualizationSlug ? (
+        <div className="p-8 rounded-2xl bg-slate-900/60 border border-slate-800 text-center space-y-2">
+          <Compass className="w-8 h-8 text-cyan-400/50 mx-auto" />
+          <h4 className="font-cinzel text-slate-200 font-bold">Interactive Model Loading</h4>
+          <p className="text-xs text-slate-400 max-w-md mx-auto">
+            Interactive visualization could not be initialized. Please consult the theoretical formulation below.
+          </p>
+        </div>
+      ) : null}
 
       {/* Properties List */}
       {wonder.properties.length > 0 && (

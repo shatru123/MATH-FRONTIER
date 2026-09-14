@@ -127,6 +127,47 @@ export const FALLBACK_PROBLEMS: Problem[] = [
     historicalStatuses: ['1904: Conjectured', '2000: Millennium Prize Problem', '2003: Proved by Perelman']
   },
   {
+    id: 4,
+    slug: 'navier-stokes-smoothness',
+    title: 'Navier–Stokes Existence and Smoothness',
+    shortDescription: 'Do smooth, physically reasonable solutions always exist for the 3D incompressible Navier-Stokes equations?',
+    fullDescription: 'The Navier-Stokes equations govern the motion of viscous fluids (water, air). The open mathematical challenge is to prove whether solutions starting from smooth initial data remain smooth for all time or can develop finite-time singularities (blow-up).',
+    field: 'Mathematical Physics & PDE',
+    categoryId: 6,
+    status: 'OPEN',
+    difficulty: 'Extreme',
+    yearIntroduced: 1845,
+    lastVerified: '2026-03-05',
+    statusSource: 'Clay Mathematics Institute',
+    sourceType: 'Official Millennium Prize Problem',
+    statusNotes: 'Official status is OPEN. Periodic claims of blow-up or global regularity appear in literature but either contain errors or apply to modified equations.',
+    mathematicalStatement: '\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u} \\cdot \\nabla)\\mathbf{u} = -\\frac{1}{\\rho}\\nabla p + \\nu \\nabla^2 \\mathbf{u} + \\mathbf{f}, \\quad \\nabla \\cdot \\mathbf{u} = 0',
+    intuition: 'When water flows, it can form violent eddies and turbulence. Does fluid velocity or vorticity ever concentrate to infinity at a single point in finite time, or does viscosity always keep the fluid smooth?',
+    whyItMatters: 'Understanding fluid turbulence is essential for aerodynamics, climate modeling, and theoretical physics. A breakdown in smoothness would indicate classical fluid mechanics is mathematically incomplete.',
+    whatWeKnow: [
+      'Global smooth solutions exist in 2 dimensions (Leray, 1934).',
+      'Weak solutions exist globally in 3 dimensions (Leray-Hopf weak solutions), but their uniqueness and smoothness remain unproven.',
+      'If a singularity forms, the vorticity must blow up sufficiently fast (Beale-Kato-Majda criterion).'
+    ],
+    whatWeDontKnow: ['Whether a smooth 3D flow can blow up in finite time from smooth initial conditions of finite energy.'],
+    partialResults: [
+      'Caffarelli-Kohn-Nirenberg (1982): Singular set in space-time has 1D Hausdorff measure zero.',
+      'Tao (2016): Finite-time blow-up exists for an averaged version of Navier-Stokes.'
+    ],
+    commonMisconceptions: ['Computer simulations showing turbulence prove singularities exist. (False: Numerical grids have finite resolution and cannot distinguish between high peaks and true infinite blow-up).'],
+    history: 'Formulated by Claude-Louis Navier (1822) and George Gabriel Stokes (1845). Included among the Clay Millennium Problems in 2000.',
+    visualizationSlug: 'navier-stokes',
+    hasExperiment: false,
+    relatedProblems: ['yang-mills-mass-gap'],
+    sourceIds: [1],
+    tags: ['Millennium Problem', 'Fluids', 'PDE', 'Turbulence'],
+    claimedSolutions: [
+      'Mukhtarbay Otelbaev (2014) claimed proof of regularity; counterexample found.',
+      'Thomas Hou et al. (2022) demonstrated singularity for 3D Euler with boundary, but Navier-Stokes remains open.'
+    ],
+    historicalStatuses: ['1845: Formulated by Stokes', '2000: Clay Millennium Prize Problem', 'Status requires verification: Ongoing active research']
+  },
+  {
     id: 5,
     slug: 'collatz-conjecture',
     title: 'Collatz Conjecture (3n + 1)',
@@ -288,6 +329,40 @@ export const FALLBACK_PROBLEMS: Problem[] = [
     historicalStatuses: ['1878: Posed by Cantor', '1940: Gödel consistency', '1963: Cohen independence via forcing']
   },
   {
+    id: 10,
+    slug: 'birch-swinnerton-dyer',
+    title: 'Birch and Swinnerton-Dyer Conjecture',
+    shortDescription: 'Relates the number of rational points on an elliptic curve to the behavior of its L-function at s = 1.',
+    fullDescription: 'The BSD conjecture asserts that the rank of the abelian group of rational points on an elliptic curve E is equal to the order of the zero of its L-function L(E, s) at s = 1.',
+    field: 'Arithmetic Geometry',
+    categoryId: 1,
+    status: 'OPEN',
+    difficulty: 'Extreme',
+    yearIntroduced: 1965,
+    lastVerified: '2026-01-01',
+    statusSource: 'Clay Mathematics Institute',
+    sourceType: 'Official Millennium Prize Problem',
+    statusNotes: 'Clay Millennium Problem. Proved for rank 0 and rank 1 by Gross-Zagier and Kolyvagin.',
+    mathematicalStatement: '\\text{ord}_{s=1} L(E, s) = \\text{rank}(E(\\mathbb{Q}))',
+    intuition: 'Elliptic curves are cubic equations y^2 = x^3 + ax + b. Finding rational points on them is notoriously hard. BSD suggests an analytic function (L-function) contains an exact fingerprint of the curve\'s rational geometry.',
+    whyItMatters: 'One of the deepest bridges between analysis and arithmetic geometry.',
+    whatWeKnow: [
+      'Gross-Zagier (1986) and Kolyvagin (1989): Proved BSD when the analytic rank is 0 or 1.',
+      'Bhargava-Shankar (2015): A positive proportion of elliptic curves have rank 0 and satisfy BSD.'
+    ],
+    whatWeDontKnow: ['Whether BSD holds for curves of rank >= 2.'],
+    partialResults: ['Proved for curves with complex multiplication (Coates-Wiles, 1977).'],
+    commonMisconceptions: ['All elliptic curves have infinitely many rational points. (False: Many have rank 0 and only a finite number of points).'],
+    history: 'Formulated in the 1960s via computer experimentation on EDSAC at Cambridge by Bryan Birch and Peter Swinnerton-Dyer.',
+    visualizationSlug: 'birch-swinnerton-dyer',
+    hasExperiment: false,
+    relatedProblems: ['riemann-hypothesis'],
+    sourceIds: [1],
+    tags: ['Millennium Problem', 'Elliptic Curves', 'L-Functions', 'Arithmetic Geometry'],
+    claimedSolutions: [],
+    historicalStatuses: ['1965: Conjectured by Birch and Swinnerton-Dyer', '2000: Clay Millennium Prize Problem']
+  },
+  {
     id: 11,
     slug: 'fermats-last-theorem',
     title: 'Fermat\'s Last Theorem',
@@ -317,6 +392,76 @@ export const FALLBACK_PROBLEMS: Problem[] = [
     tags: ['Solved', 'Number Theory', 'Elliptic Curves'],
     claimedSolutions: ['Wiles\' proof accepted 1995.'],
     historicalStatuses: ['1637: Conjectured', '1994: Solved by Andrew Wiles']
+  },
+  {
+    id: 12,
+    slug: 'hodge-conjecture',
+    title: 'Hodge Conjecture',
+    shortDescription: 'On projective complex algebraic varieties, Hodge classes are rational linear combinations of algebraic cycles.',
+    fullDescription: 'Posed by W. V. D. Hodge in 1950, this Clay Millennium Problem asserts that for projective algebraic varieties, topological information can be completely realized by geometric algebraic subvarieties.',
+    field: 'Algebraic Geometry & Complex Geometry',
+    categoryId: 3,
+    status: 'OPEN',
+    difficulty: 'Extreme',
+    yearIntroduced: 1950,
+    lastVerified: '2026-03-01',
+    statusSource: 'Clay Mathematics Institute',
+    sourceType: 'Official Millennium Prize Problem',
+    statusNotes: 'Clay Millennium Problem. OPEN. Known for dimension <= 3 and for divisors (Lefschetz (1,1)-theorem), but open in general.',
+    mathematicalStatement: '\\text{Every Hodge class in } H^{2k}(X, \\mathbb{Q}) \\cap H^{k,k}(X) \\text{ is a rational linear combination of algebraic cycles.}',
+    intuition: 'Can the topological shape of an algebraic space always be constructed purely out of geometric algebraic shapes (zero sets of polynomials)?',
+    whyItMatters: 'Provides the foundational link between topology, analysis (differential forms), and algebraic geometry.',
+    whatWeKnow: [
+      'Proved for degree (1,1) classes by the Lefschetz (1,1) theorem.',
+      'Proved for varieties of dimension at most 3.',
+      'Integral Hodge conjecture is false, rational remains open.'
+    ],
+    whatWeDontKnow: ['Whether Hodge classes of codimension >= 2 on arbitrary projective varieties are algebraic with rational coefficients.'],
+    partialResults: ['Lefschetz (1,1)-theorem: All (1,1) integral classes are algebraic.'],
+    commonMisconceptions: ['The conjecture applies with integer coefficients. (False: Rational coefficients are required).'],
+    history: 'Formulated by W. V. D. Hodge at the 1950 ICM. Selected as Clay Millennium Problem in 2000.',
+    visualizationSlug: undefined,
+    hasExperiment: false,
+    relatedProblems: ['poincare-conjecture', 'birch-swinnerton-dyer'],
+    sourceIds: [1],
+    tags: ['Millennium Problem', 'Algebraic Geometry', 'Cohomology'],
+    claimedSolutions: [],
+    historicalStatuses: ['1950: Conjectured by W. V. D. Hodge', '2000: Clay Millennium Prize Problem']
+  },
+  {
+    id: 13,
+    slug: 'yang-mills-mass-gap',
+    title: 'Yang–Mills Existence and Mass Gap',
+    shortDescription: 'Prove that quantum Yang-Mills theory exists on R^4 and predicts a strictly positive mass gap Delta > 0.',
+    fullDescription: 'Formulated by Chen Ning Yang and Robert Mills in 1954, non-abelian gauge theory forms the foundation of the Standard Model of particle physics. The mathematical problem is to provide a rigorous axiomatic quantum field theory and prove that the lightest gauge particle has strictly positive mass.',
+    field: 'Quantum Field Theory & Mathematical Physics',
+    categoryId: 6,
+    status: 'OPEN',
+    difficulty: 'Extreme',
+    yearIntroduced: 1954,
+    lastVerified: '2026-03-01',
+    statusSource: 'Clay Mathematics Institute / Jaffe-Witten',
+    sourceType: 'Official Millennium Prize Problem',
+    statusNotes: 'Clay Millennium Problem. OPEN. Supported by lattice QCD simulations and physical experiments, but no mathematically rigorous proof exists in 4D Minkowski space.',
+    mathematicalStatement: '\\exists \\Delta > 0 \\text{ such that every state } \\psi \\text{ orthogonal to the vacuum satisfies } H \\psi \\ge \\Delta \\psi',
+    intuition: 'Gluons that carry the strong force are massless in classical physics, yet nuclear forces have a finite range and glueballs have massive weight. Why does a quantum theory of massless particles spontaneously acquire a mass barrier?',
+    whyItMatters: 'Explains quark confinement and places relativistic quantum field theory on rigorous mathematical footing.',
+    whatWeKnow: [
+      'Rigorous constructive quantum field theory exists in 2D and 3D spacetime.',
+      'Lattice gauge theory confirms the mass gap numerically to high precision.',
+      'Asymptotic freedom proved by Gross, Wilczek, and Politzer.'
+    ],
+    whatWeDontKnow: ['Rigorous mathematical construction of 4D non-abelian quantum gauge theory and proof of the positive mass gap.'],
+    partialResults: ['Constructive field theory successes in lower dimensions.'],
+    commonMisconceptions: ['Because physicists use Yang-Mills every day, it is mathematically proven. (False: The continuum limit remains unproven).'],
+    history: 'Introduced by Yang and Mills (1954). Jaffe and Witten authored official Clay problem description in 2000.',
+    visualizationSlug: undefined,
+    hasExperiment: false,
+    relatedProblems: ['navier-stokes-smoothness'],
+    sourceIds: [1],
+    tags: ['Millennium Problem', 'Quantum Physics', 'Gauge Theory', 'Mass Gap'],
+    claimedSolutions: [],
+    historicalStatuses: ['1954: Formulated by Yang and Mills', '2000: Clay Millennium Prize Problem']
   }
 ];
 
@@ -514,6 +659,317 @@ export const FALLBACK_WONDERS: MathematicalWonder[] = [
     experimentSlug: 'hyperbolic-geometry',
     tags: ['Geometry', 'Non-Euclidean', 'Poincaré Disk'],
     sources: ['Lobachevsky (1829)', 'Bolyai (1832)']
+  },
+  {
+    id: 8,
+    slug: 'zenos-paradoxes',
+    title: "Zeno's Paradoxes",
+    shortDescription: 'Ancient philosophical paradoxes questioning the reality of motion, continuous space, and infinite divisibility.',
+    fullDescription: 'Devised by Zeno of Elea around 450 BCE to support Parmenides doctrine that all is one and motion is an illusion. The famous paradoxes—Achilles and the Tortoise, the Dichotomy, and the Arrow—challenged human intuition for millennia until calculus and real analysis resolved infinite series convergence.',
+    categoryId: 8,
+    status: 'PARADOX',
+    intuition: 'Achilles can never overtake a tortoise with a head start: before overtaking it, he must reach where it started; by then, the tortoise has moved ahead. An infinite sequence of tasks must be completed in finite time! Calculus answers: an infinite sum of shrinking time intervals converges to a finite number.',
+    mathematics: 'Geometric progression: S = a / (1 - r). In the Dichotomy paradox: sum_{n=1}^inf (1/2)^n = 1.',
+    properties: [
+      'Infinite series convergence',
+      'Sum of infinite non-zero intervals can be strictly finite',
+      'Geometric progression: S = a / (1 - r)',
+      'Calculus resolution of instantaneous velocity via limits: v(t) = ds/dt = lim_{dt -> 0} ds/dt'
+    ],
+    constructionSteps: [
+      '1. Give Tortoise 100m head start.',
+      '2. Achilles runs 10x faster than tortoise.',
+      '3. When Achilles reaches 100m, Tortoise at 110m.',
+      '4. Sum converges: 100 / (1 - 0.1) = 111.11m.',
+      '5. Achilles passes Tortoise at t = 11.11 seconds.'
+    ],
+    parametricEquations: 'x_A(t) = v_A \\cdot t, \\quad x_T(t) = x_0 + v_T \\cdot t',
+    visualizationSlug: 'zenos-paradoxes',
+    hasExperiment: true,
+    experimentSlug: 'zenos-paradoxes',
+    tags: ['Infinity', 'Paradox', 'Calculus', 'Series', 'Interactive Lab'],
+    sources: ['Aristotle, Physics VI:9', 'Russell, Bertrand (1903)']
+  },
+  {
+    id: 9,
+    slug: 'projective-plane',
+    title: 'Real Projective Plane (Cross-Cap)',
+    shortDescription: 'A non-orientable surface with Euler characteristic 1 that cannot be embedded in 3D without self-intersection.',
+    fullDescription: 'The real projective plane RP^2 is the topological space of lines through the origin in R^3. Topologically, it is formed by taking a 2-sphere and identifying antipodal points, or gluing a disk to the boundary of a Möbius strip.',
+    categoryId: 2,
+    status: 'PHENOMENON',
+    intuition: 'Imagine standing in the center of a sphere: every line of sight connects two opposite antipodal points. If you decree that opposite points are actually the exact same location, you get the projective plane.',
+    mathematics: 'RP^2 = S^2 / ~ with x ~ -x. Euler characteristic chi = 1, pi_1 = Z_2.',
+    properties: [
+      'Non-orientable compact 2-manifold without boundary',
+      'Euler characteristic chi = 1',
+      'Fundamental group pi_1 = Z_2',
+      'Non-embeddable in R^3 without self-intersection'
+    ],
+    constructionSteps: [
+      '1. Take northern hemisphere of S^2.',
+      '2. Identify opposite boundary points on equator.',
+      '3. Sew disk onto boundary of Möbius strip.'
+    ],
+    parametricEquations: 'x = 0.5 sin(2u) sin^2(v), y = sin(u) cos(2v), z = cos(u) cos(2v)',
+    visualizationSlug: 'projective-plane',
+    hasExperiment: true,
+    experimentSlug: 'projective-plane',
+    tags: ['Topology', 'Non-orientable', 'Projective Geometry', 'Interactive 3D'],
+    sources: ['Boy, Werner (1901)', 'Hilbert & Cohn-Vossen (1932)']
+  },
+  {
+    id: 10,
+    slug: 'cantors-diagonal-argument',
+    title: "Cantor's Diagonal Argument",
+    shortDescription: 'A proof that the real numbers are strictly more numerous than the integers: uncountability of the continuum.',
+    fullDescription: 'Published in 1891 by Georg Cantor, the diagonal argument proved that the set of real numbers is uncountable, establishing that infinity has different magnitudes.',
+    categoryId: 4,
+    status: 'THEOREM',
+    intuition: 'List every real number between 0 and 1. Construct a new number by flipping the n-th digit of the n-th number. This new diagonal number differs from every single number on your list!',
+    mathematics: 'For any enumeration f: N -> (0, 1), invert diagonal bits d_n = 1 - f(n)_n. Then d != f(k) for all k. Hence |R| > |N|.',
+    properties: [
+      'Cardinality |R| = 2^aleph_0 > aleph_0',
+      'Constructive refutation of countability',
+      'Foundation of Turing halting problem and Gödel incompleteness'
+    ],
+    constructionSteps: [
+      '1. List binary sequences.',
+      '2. Invert n-th bit of n-th row.',
+      '3. Inverted sequence cannot be on list.'
+    ],
+    parametricEquations: 'd_n = 1 - s_{n,n}',
+    visualizationSlug: 'cantors-diagonal-argument',
+    hasExperiment: true,
+    experimentSlug: 'cantors-diagonal-argument',
+    tags: ['Infinity', 'Set Theory', 'Theorem', 'Cantor', 'Interactive Lab'],
+    sources: ['Cantor, Georg (1891)']
+  },
+  {
+    id: 11,
+    slug: 'birthday-paradox',
+    title: 'The Birthday Paradox',
+    shortDescription: 'In a group of only 23 people, there is a greater than 50% probability that at least two share the same birthday.',
+    fullDescription: 'A celebrated veridical paradox of probability theory. Despite intuition suggesting you need ~183 people for 50%, only 23 people are required because pairwise comparisons grow quadratically as n(n-1)/2.',
+    categoryId: 8,
+    status: 'PARADOX',
+    intuition: '23 people form 23 * 22 / 2 = 253 pairs. With 253 chances for a match, the collision probability surpasses 50% surprisingly fast.',
+    mathematics: 'P(match) = 1 - prod_{k=0}^{n-1} (1 - k/365) approx 1 - e^{-n(n-1)/(2 * 365)}. For n=23, P approx 50.73%.',
+    properties: [
+      'Combinatorial explosion of pairs',
+      'Quadratic pair growth: n(n-1)/2',
+      'Foundation of Birthday Attacks in cryptography'
+    ],
+    constructionSteps: [
+      '1. Person 1 has 365/365 available birthdays.',
+      '2. Person 2 has 364/365 to avoid collision.',
+      '3. Multiply non-collision probabilities.',
+      '4. Subtract product from 1.'
+    ],
+    parametricEquations: 'P(n) = 1 - \\frac{365!}{365^n (365-n)!}',
+    visualizationSlug: 'birthday-paradox',
+    hasExperiment: true,
+    experimentSlug: 'birthday-paradox',
+    tags: ['Probability', 'Paradox', 'Combinatorics', 'Cryptography', 'Interactive Lab'],
+    sources: ['von Mises, Richard (1939)', 'Feller, William (1968)']
+  },
+  {
+    id: 12,
+    slug: 'monty-hall-problem',
+    title: 'The Monty Hall Problem',
+    shortDescription: 'Switching doors after the host reveals a goat doubles your probability of winning the car from 1/3 to 2/3.',
+    fullDescription: 'Based on the television show Let\'s Make a Deal. Contestants choose 1 of 3 doors. The host opens a goat door from the remaining two. Switching doors doubles the winning odds.',
+    categoryId: 8,
+    status: 'PARADOX',
+    intuition: 'Initial pick has 1/3 chance of car, 2/3 chance of goat. If you picked a goat, Monty is forced to open the only other goat, so switching wins the car 100% of the time you picked goat (2/3 overall)!',
+    mathematics: 'P(Win | Stay) = 1/3, P(Win | Switch) = 2/3 by Bayes theorem.',
+    properties: [
+      'Conditional probability & Bayes theorem',
+      'Asymmetric information from host action',
+      'Frequentist convergence to 66.7% vs 33.3%'
+    ],
+    constructionSteps: [
+      '1. 3 doors: 1 car, 2 goats.',
+      '2. Pick door (1/3 car, 2/3 goat).',
+      '3. Host opens goat door.',
+      '4. Switch door to win 2/3 of games.'
+    ],
+    parametricEquations: 'P(\\text{Win switch}) = \\frac{N-1}{N}',
+    visualizationSlug: 'monty-hall-problem',
+    hasExperiment: true,
+    experimentSlug: 'monty-hall-problem',
+    tags: ['Probability', 'Paradox', 'Bayesian', 'Game Theory', 'Interactive Lab'],
+    sources: ['Selvin, Steve (1975)', 'vos Savant, Marilyn (1990)']
+  },
+  {
+    id: 13,
+    slug: 'gabriels-horn',
+    title: "Gabriel's Horn (Torricelli's Trumpet)",
+    shortDescription: 'A geometric surface of revolution with finite volume (pi) but infinite surface area.',
+    fullDescription: 'Discovered in 1641 by Evangelista Torricelli. Revolving y = 1/x from x = 1 to infinity produces a trumpet solid with finite volume of pi, yet infinite surface area.',
+    categoryId: 7,
+    status: 'PARADOX',
+    intuition: 'Painter\'s paradox: You could fill the entire trumpet solid with a finite can of paint (pi cubic units), but that same paint could never cover the interior surface area!',
+    mathematics: 'V = pi int_1^inf (1/x^2) dx = pi. A = 2 pi int_1^inf (1/x) sqrt(1 + 1/x^4) dx > 2 pi int_1^inf (1/x) dx = infinity.',
+    properties: [
+      'Finite volume = pi',
+      'Infinite surface area',
+      'Painter\'s paradox of improper integrals'
+    ],
+    constructionSteps: [
+      '1. Plot curve y = 1/x for x >= 1.',
+      '2. Revolve curve 360 degrees around x-axis.',
+      '3. Volume converges to pi.',
+      '4. Surface area diverges logarithmically.'
+    ],
+    parametricEquations: 'x = u, y = \\frac{1}{u}\\cos v, z = \\frac{1}{u}\\sin v',
+    visualizationSlug: 'gabriels-horn',
+    hasExperiment: true,
+    experimentSlug: 'gabriels-horn',
+    tags: ['Calculus', 'Analysis', 'Paradox', 'Integrals', 'Interactive 3D'],
+    sources: ['Torricelli, Evangelista (1644)']
+  },
+  {
+    id: 14,
+    slug: 'julia-set',
+    title: 'Julia Sets',
+    shortDescription: 'Complex fractal boundaries formed by repeating z -> z^2 + c for fixed parameter c.',
+    fullDescription: 'Investigated by Gaston Julia and Pierre Fatou in 1918, Julia sets are the dynamical twin of the Mandelbrot set, showing dynamics in the complex z-plane for a constant c.',
+    categoryId: 8,
+    status: 'PHENOMENON',
+    intuition: 'Every point c in the Mandelbrot set yields an entire unique Julia fractal world. If c is inside the Mandelbrot set, the Julia set is connected; otherwise it explodes into dust.',
+    mathematics: 'J_c = boundary of bounded orbit set for f_c(z) = z^2 + c.',
+    properties: [
+      'Connected if and only if c in Mandelbrot set M',
+      'Self-similar under backward iterations',
+      'Chaotic repeller for complex polynomial dynamics'
+    ],
+    constructionSteps: [
+      '1. Fix complex constant c.',
+      '2. For each pixel z, iterate z -> z^2 + c.',
+      '3. Color by escape speed.'
+    ],
+    parametricEquations: 'z_{n+1} = z_n^2 + c',
+    visualizationSlug: 'julia-set',
+    hasExperiment: true,
+    experimentSlug: 'fractal-lab',
+    tags: ['Fractals', 'Complex Dynamics', 'Chaos', 'Interactive Lab'],
+    sources: ['Julia, Gaston (1918)']
+  },
+  {
+    id: 15,
+    slug: 'sierpinski-triangle',
+    title: 'Sierpiński Triangle',
+    shortDescription: 'A fractal triangle with fractional Hausdorff dimension log(3)/log(2) ~ 1.585 and zero area.',
+    fullDescription: 'Introduced by Wacław Sierpiński in 1915, formed by repeatedly removing the central inverted equilateral triangle from each triangular stage.',
+    categoryId: 8,
+    status: 'PHENOMENON',
+    intuition: 'Take a triangle, remove the middle quarter, repeat forever. The leftover shape has zero area yet infinite perimeter and intricate connectivity.',
+    mathematics: 'Hausdorff dimension = log 3 / log 2 approx 1.585. Area converges to 0, perimeter diverges to infinity.',
+    properties: [
+      'Hausdorff dimension ~ 1.585',
+      'Zero Lebesgue area',
+      'Infinite perimeter',
+      'Generated via Chaos Game or Pascal mod 2'
+    ],
+    constructionSteps: [
+      '1. Start with equilateral triangle.',
+      '2. Connect midpoints of 3 edges.',
+      '3. Remove central inverted triangle.',
+      '4. Repeat recursively on 3 smaller triangles.'
+    ],
+    parametricEquations: 'f_1(x)=x/2, f_2(x)=x/2+(1/2,0), f_3(x)=x/2+(1/4, \\sqrt{3}/4)',
+    visualizationSlug: 'sierpinski-triangle',
+    hasExperiment: true,
+    experimentSlug: 'fractal-lab',
+    tags: ['Fractals', 'Geometry', 'Hausdorff Dimension', 'Chaos Game'],
+    sources: ['Sierpiński, W. (1915)']
+  },
+  {
+    id: 16,
+    slug: 'koch-snowflake',
+    title: 'Koch Snowflake',
+    shortDescription: 'A continuous nowhere-differentiable fractal curve enclosing a finite area within an infinite perimeter.',
+    fullDescription: 'Introduced by Helge von Koch in 1904. Starting with an equilateral triangle, each segment has its middle third replaced by a triangular tent.',
+    categoryId: 8,
+    status: 'PHENOMENON',
+    intuition: 'An island of finite area surrounded by an infinite coastline! You can fence the entire snowflake with a small ring, but walking its edge takes infinite distance.',
+    mathematics: 'Perimeter: P_n = 3s (4/3)^n -> infinity. Area: A_inf = 8/5 A_0. Dimension = log 4 / log 3 approx 1.262.',
+    properties: [
+      'Infinite perimeter',
+      'Finite area = 8/5 A_0',
+      'Continuous everywhere, differentiable nowhere',
+      'Hausdorff dimension ~ 1.262'
+    ],
+    constructionSteps: [
+      '1. Start with equilateral triangle.',
+      '2. Divide each segment into 3 parts.',
+      '3. Build equilateral tent on middle third.',
+      '4. Repeat indefinitely.'
+    ],
+    parametricEquations: 'L_n = L_0 (4/3)^n',
+    visualizationSlug: 'koch-snowflake',
+    hasExperiment: true,
+    experimentSlug: 'fractal-lab',
+    tags: ['Fractals', 'Geometry', 'Infinite Perimeter'],
+    sources: ['von Koch, H. (1904)']
+  },
+  {
+    id: 17,
+    slug: 'cantor-set',
+    title: 'The Cantor Set (Cantor Dust)',
+    shortDescription: 'A subset of the unit interval that is uncountably infinite, nowhere dense, and has measure zero.',
+    fullDescription: 'Introduced by Georg Cantor in 1883. Repeatedly removing the open middle third leaves a dust of points that has the same cardinality as the real line yet zero length.',
+    categoryId: 7,
+    status: 'PHENOMENON',
+    intuition: 'Remove 1/3, then 2/9, then 4/27... Total removed length equals exactly 1. Yet infinitely many points remain, uncountably many!',
+    mathematics: 'Measure = 0. Cardinality |C| = 2^aleph_0. Hausdorff dimension = log 2 / log 3 approx 0.631.',
+    properties: [
+      'Measure zero',
+      'Uncountable cardinality',
+      'Totally disconnected and perfect set',
+      'Hausdorff dimension ~ 0.631'
+    ],
+    constructionSteps: [
+      '1. Start with [0, 1].',
+      '2. Remove middle third (1/3, 2/3).',
+      '3. Repeat on remaining intervals.',
+      '4. Retains numbers with base-3 digits without 1.'
+    ],
+    parametricEquations: 'C = \\{ x = \\sum_{k=1}^\\infty a_k / 3^k : a_k \\in \\{0, 2\\} \\}',
+    visualizationSlug: 'cantor-set',
+    hasExperiment: true,
+    experimentSlug: 'fractal-lab',
+    tags: ['Set Theory', 'Analysis', 'Topology', 'Measure Zero'],
+    sources: ['Cantor, Georg (1883)']
+  },
+  {
+    id: 18,
+    slug: 'dragon-curve',
+    title: 'The Heighway Dragon Curve',
+    shortDescription: 'A self-similar space-filling fractal curve generated by repeatedly folding a strip of paper in half.',
+    fullDescription: 'Discovered in 1966 by Heighway, Banks, and Harter. Formed by repeatedly folding a paper strip in half, then unfolding each fold to a right angle.',
+    categoryId: 8,
+    status: 'PHENOMENON',
+    intuition: 'Repeatedly folding paper and unfolding creases to 90 degrees produces a non-self-intersecting dragon curve that tiles the 2D plane perfectly.',
+    mathematics: 'Boundary dimension approx 1.5236. Four dragon curves joined at origin tile R^2 without overlap.',
+    properties: [
+      'Paper-folding sequence of alternating turns',
+      'Self-similar with 45-degree rotation scaling',
+      'Tiles 2D plane seamlessly'
+    ],
+    constructionSteps: [
+      '1. Fold strip of paper in half.',
+      '2. Fold again in same direction.',
+      '3. Unfold creases to 90 degrees.',
+      '4. Observe fractal curve emerge.'
+    ],
+    parametricEquations: 'f_1(z) = \\frac{1+i}{2} z, \\quad f_2(z) = 1 - \\frac{1-i}{2} z',
+    visualizationSlug: 'dragon-curve',
+    hasExperiment: true,
+    experimentSlug: 'fractal-lab',
+    tags: ['Fractals', 'Paper Folding', 'Plane Tiling'],
+    sources: ['Gardner, Martin (1967)']
   }
 ];
 
@@ -546,5 +1002,18 @@ export const FALLBACK_VISUALIZATIONS: Visualization[] = [
   { id: 8, slug: 'collatz-conjecture', title: 'Collatz Trajectory Explorer', description: 'Interactive 3n+1 sequence plotter with stopping time, maximum excursion, and multi-number comparison.', type: 'InteractiveSvg', supportedModes: ['Explore', 'Guided'] },
   { id: 9, slug: 'goldbach-conjecture', title: 'Goldbach Decomposition Lab', description: 'Interactive even integer decomposition calculator with prime pair distribution and Goldbach comet.', type: 'InteractiveSvg', supportedModes: ['Explore', 'Guided'] },
   { id: 10, slug: 'twin-prime-conjecture', title: 'Twin Prime Sieve Explorer', description: 'Interactive prime number line highlighting (p, p+2) pairs and prime gap density.', type: 'InteractiveSvg', supportedModes: ['Explore', 'Guided'] },
-  { id: 11, slug: 'riemann-hypothesis', title: 'Riemann Zeta Zero Spectrum', description: 'Complex plane visualizer with critical strip, critical line Re(s) = 1/2, and known non-trivial zeros.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided', 'Mathematical'] }
+  { id: 11, slug: 'riemann-hypothesis', title: 'Riemann Zeta Zero Spectrum', description: 'Complex plane visualizer with critical strip, critical line Re(s) = 1/2, and known non-trivial zeros.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 12, slug: 'zenos-paradoxes', title: 'Zeno\'s Paradoxes Interactive Laboratory', description: 'Achilles & Tortoise animated race, Dichotomy geometric series bar convergence, and Arrow instantaneous velocity limit.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 13, slug: 'projective-plane', title: 'Real Projective Plane (Cross-Cap) 3D', description: 'Interactive 3D parametric cross-cap model of RP^2 illustrating antipodal quotient and non-orientability.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 14, slug: 'cantors-diagonal-argument', title: 'Cantor\'s Diagonal Argument Visualizer', description: 'Interactive binary sequence table demonstrating diagonal bit inversion and uncountability of reals.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 15, slug: 'birthday-paradox', title: 'Birthday Paradox Simulator & Calculator', description: 'Interactive room size slider, exact collision probability curve, and Monte Carlo multi-trial generator.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 16, slug: 'monty-hall-problem', title: 'Monty Hall 3-Door Simulation & Monte Carlo', description: 'Interactive 3-door game showing switch vs stay strategies with live frequentist convergence.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 17, slug: 'gabriels-horn', title: 'Gabriel\'s Horn 3D Surface of Revolution', description: 'Interactive 3D horn y = 1/x demonstrating finite volume versus infinite surface area.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 18, slug: 'p-vs-np', title: 'P vs NP Verification vs Search Complexity Lab', description: 'Interactive complexity class visualizer and verification vs search demonstrator.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 19, slug: 'poincare-conjecture', title: 'Poincaré Conjecture 3-Sphere Surgery Visualizer', description: 'Ricci flow neckpinch singularity surgery and simply connected loop shrinking visualizer.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 20, slug: 'julia-set', title: 'Julia Sets Complex Plane Dynamics', description: 'Interactive Julia set fractal with custom parameter explorer linked to the Mandelbrot plane.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 21, slug: 'sierpinski-triangle', title: 'Sierpiński Triangle Recursive IFS', description: 'Recursive removal and chaos game generation of the Sierpiński gasket.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
+  { id: 22, slug: 'koch-snowflake', title: 'Koch Snowflake Infinite Shoreline', description: 'Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
+  { id: 23, slug: 'cantor-set', title: 'Cantor Set Middle-Third Construction', description: 'Stage-by-stage removal of the middle third illustrating measure zero and uncountability.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
+  { id: 24, slug: 'dragon-curve', title: 'Heighway Dragon Paper-Folding Fractal', description: 'Recursive paper-folding turn generator and plane-tiling 2D fractal curve.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] }
 ];
