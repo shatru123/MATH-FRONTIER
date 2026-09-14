@@ -4,7 +4,7 @@
 FROM node:22-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/math-frontier-web/package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps --no-audit --no-fund
 COPY frontend/math-frontier-web/ ./
 RUN npm run build
 
