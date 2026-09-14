@@ -37,6 +37,34 @@ export const AboutPage: React.FC = () => {
           <li>Computational evidence is explicitly demarcated as distinct from general proof.</li>
         </ul>
       </div>
+
+      <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-950 border border-cyan-500/30 space-y-4 leading-relaxed text-sm shadow-xl">
+        <h2 className="font-cinzel text-xl font-bold text-slate-100 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-cyan-400" />
+          Platform Creator
+        </h2>
+        <p className="text-slate-300">
+          Math Frontier was designed and created by <strong>Shatrughna Ambhore</strong> as a modern digital mathematics museum, interactive 3D laboratory, and rigorous knowledge repository.
+        </p>
+        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+          <div>
+            <span className="text-slate-500 block text-[10px] uppercase">Creator</span>
+            <span className="text-slate-100 font-bold text-sm">Shatrughna Ambhore</span>
+          </div>
+          <div>
+            <span className="text-slate-500 block text-[10px] uppercase">Email</span>
+            <a href="mailto:ambhoreshatrughna@gmail.com" className="text-cyan-400 hover:underline">
+              ambhoreshatrughna@gmail.com
+            </a>
+          </div>
+          <div>
+            <span className="text-slate-500 block text-[10px] uppercase">Phone / Contact</span>
+            <a href="tel:+919604466334" className="text-cyan-400 hover:underline">
+              +91 9604466334
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

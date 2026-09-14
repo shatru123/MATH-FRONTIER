@@ -241,3 +241,13 @@ This starts `math-frontier-api` on port `5000`.
 ## 10. License
 
 MIT License. Designed with scientific rigor for mathematics educators, researchers, and enthusiasts worldwide.
+
+---
+
+## 11. Creator & Contact
+
+**Math Frontier** was created and developed by:
+
+* **Creator**: Shatrughna Ambhore
+* **Email**: [ambhoreshatrughna@gmail.com](mailto:ambhoreshatrughna@gmail.com)
+* **Phone / Contact**: [+91 9604466334](tel:+919604466334)

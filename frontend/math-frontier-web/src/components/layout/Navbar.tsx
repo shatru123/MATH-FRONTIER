@@ -171,8 +171,13 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500">
-        <span>&copy; {new Date().getFullYear()} Math Frontier. All mathematical citations peer-verified.</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <div>
+          <span>&copy; {new Date().getFullYear()} Math Frontier. All mathematical citations peer-verified.</span>
+          <div className="mt-1 text-slate-400">
+            Created by <strong className="text-cyan-400 font-medium">Shatrughna Ambhore</strong> • <a href="mailto:ambhoreshatrughna@gmail.com" className="text-cyan-400 hover:underline">ambhoreshatrughna@gmail.com</a> • <a href="tel:+919604466334" className="text-cyan-400 hover:underline">+91 9604466334</a>
+          </div>
+        </div>
         <span>Render Deployment Ready • Monorepo</span>
       </div>
     </footer>
