@@ -1,0 +1,14 @@
+**/.git
+**/.github
+**/node_modules
+**/dist
+**/bin
+**/obj
+**/.vs
+**/.vscode
+**/.idea
+**/*.db
+**/*.sqlite
+frontend/math-frontier-web/node_modules
+frontend/math-frontier-web/dist
+.dotnet_home
