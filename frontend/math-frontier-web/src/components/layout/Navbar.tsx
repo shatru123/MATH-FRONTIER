@@ -178,7 +178,6 @@ export const Footer: React.FC = () => {
             Created by <strong className="text-cyan-400 font-medium">Shatrughna Ambhore</strong> • <a href="mailto:ambhoreshatrughna@gmail.com" className="text-cyan-400 hover:underline">ambhoreshatrughna@gmail.com</a> • <a href="tel:+919604466334" className="text-cyan-400 hover:underline">+91 9604466334</a>
           </div>
         </div>
-        <span>Render Deployment Ready • Monorepo</span>
       </div>
     </footer>
   );
