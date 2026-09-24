@@ -82,6 +82,18 @@ public class RepositoryAndSearchTests
         var btVis = await visRepo.GetBySlugAsync("banach-tarski-paradox");
         Assert.NotNull(btVis);
         Assert.Equal("banach-tarski", btVis.Slug);
+
+        var hpWonder = await wonderRepo.GetBySlugAsync("hanging-paradox");
+        Assert.NotNull(hpWonder);
+        Assert.Equal("unexpected-hanging-paradox", hpWonder.Slug);
+
+        var hpWonderTypo = await wonderRepo.GetBySlugAsync("hanging-paradocs");
+        Assert.NotNull(hpWonderTypo);
+        Assert.Equal("unexpected-hanging-paradox", hpWonderTypo.Slug);
+
+        var hpVis = await visRepo.GetBySlugAsync("hanging-paradox");
+        Assert.NotNull(hpVis);
+        Assert.Equal("unexpected-hanging-paradox", hpVis.Slug);
     }
 
     [Fact]
@@ -100,13 +112,28 @@ public class RepositoryAndSearchTests
     }
 
     [Fact]
+    public async Task UnexpectedHangingParadox_IsSeededAndConfigured()
+    {
+        using var context = await CreateContextAsync();
+        var wonderRepo = new WonderRepository(context);
+
+        var paradox = await wonderRepo.GetBySlugAsync("unexpected-hanging-paradox");
+        Assert.NotNull(paradox);
+        Assert.Equal(ProblemStatus.PARADOX, paradox.Status);
+        Assert.Equal("unexpected-hanging-paradox", paradox.VisualizationSlug);
+        Assert.True(paradox.HasExperiment);
+        Assert.NotEmpty(paradox.Properties);
+        Assert.NotEmpty(paradox.ConstructionSteps);
+    }
+
+    [Fact]
     public async Task AllRequiredWondersAndProblems_AreSeeded()
     {
         using var context = await CreateContextAsync();
         var wonders = await context.Wonders.ToListAsync();
         var problems = await context.Problems.ToListAsync();
 
-        Assert.True(wonders.Count >= 18, $"Expected >= 18 wonders, found {wonders.Count}");
+        Assert.True(wonders.Count >= 19, $"Expected >= 19 wonders, found {wonders.Count}");
         Assert.True(problems.Count >= 13, $"Expected >= 13 problems, found {problems.Count}");
 
         var requiredWonderSlugs = new[]
@@ -115,7 +142,7 @@ public class RepositoryAndSearchTests
             "mandelbrot-set", "hyperbolic-geometry", "zenos-paradoxes", "projective-plane",
             "cantors-diagonal-argument", "birthday-paradox", "monty-hall-problem",
             "gabriels-horn", "julia-set", "sierpinski-triangle", "koch-snowflake",
-            "cantor-set", "dragon-curve"
+            "cantor-set", "dragon-curve", "unexpected-hanging-paradox"
         };
 
         foreach (var slug in requiredWonderSlugs)

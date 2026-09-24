@@ -18,6 +18,7 @@ import { TwinPrimeLab } from './TwinPrimeLab';
 import { RiemannHypothesisLab } from './RiemannHypothesisLab';
 import { PvsNPLab } from './PvsNPLab';
 import { PoincareConjectureScene } from './PoincareConjectureScene';
+import { HangingParadoxLab } from './HangingParadoxLab';
 
 // Fractal wrapper components
 const JuliaSetLab: React.FC = () => <FractalLab initialType="julia" />;
@@ -297,6 +298,42 @@ export const VISUALIZATION_REGISTRY: Record<string, VisualizationRegistryEntry> 
     isThreeD: true,
     entityType: 'problem',
     entitySlug: 'poincare-conjecture'
+  },
+  'unexpected-hanging-paradox': {
+    title: 'Unexpected Hanging Paradox Laboratory',
+    description: 'Interactive backward induction timeline, executioner knock simulator, and epistemic logic analysis.',
+    component: HangingParadoxLab,
+    category: 'Paradoxes',
+    isThreeD: false,
+    entityType: 'wonder',
+    entitySlug: 'unexpected-hanging-paradox'
+  },
+  'hanging-paradox': {
+    title: 'Unexpected Hanging Paradox Laboratory',
+    description: 'Interactive backward induction timeline, executioner knock simulator, and epistemic logic analysis.',
+    component: HangingParadoxLab,
+    category: 'Paradoxes',
+    isThreeD: false,
+    entityType: 'wonder',
+    entitySlug: 'unexpected-hanging-paradox'
+  },
+  'hanging-paradocs': {
+    title: 'Unexpected Hanging Paradox Laboratory',
+    description: 'Interactive backward induction timeline, executioner knock simulator, and epistemic logic analysis.',
+    component: HangingParadoxLab,
+    category: 'Paradoxes',
+    isThreeD: false,
+    entityType: 'wonder',
+    entitySlug: 'unexpected-hanging-paradox'
+  },
+  'surprise-examination': {
+    title: 'Unexpected Hanging Paradox Laboratory',
+    description: 'Interactive backward induction timeline, executioner knock simulator, and epistemic logic analysis.',
+    component: HangingParadoxLab,
+    category: 'Paradoxes',
+    isThreeD: false,
+    entityType: 'wonder',
+    entitySlug: 'unexpected-hanging-paradox'
   }
 };
 

@@ -99,6 +99,7 @@ public class WonderRepository : IWonderRepository
     {
         var slugLower = slug.ToLower();
         if (slugLower == "banach-tarski") slugLower = "banach-tarski-paradox";
+        if (slugLower == "hanging-paradox" || slugLower == "hanging-paradocs" || slugLower == "surprise-examination") slugLower = "unexpected-hanging-paradox";
         return await _context.Wonders
             .Include(w => w.Category)
             .FirstOrDefaultAsync(w => w.Slug.ToLower() == slugLower);
@@ -124,6 +125,7 @@ public class VisualizationRepository : IVisualizationRepository
         var slugLower = slug.ToLower();
         if (slugLower == "banach-tarski-paradox") slugLower = "banach-tarski";
         if (slugLower == "navier-stokes-smoothness") slugLower = "navier-stokes";
+        if (slugLower == "hanging-paradox" || slugLower == "hanging-paradocs" || slugLower == "surprise-examination") slugLower = "unexpected-hanging-paradox";
         return await _context.Visualizations.FirstOrDefaultAsync(v => v.Slug.ToLower() == slugLower);
     }
 }

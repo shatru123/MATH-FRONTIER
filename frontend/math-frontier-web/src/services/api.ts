@@ -103,6 +103,7 @@ class MathFrontierApiClient {
   async getWonderBySlug(slug: string): Promise<MathematicalWonder | null> {
     let normalized = slug.toLowerCase();
     if (normalized === 'banach-tarski') normalized = 'banach-tarski-paradox';
+    if (normalized === 'hanging-paradox' || normalized === 'hanging-paradocs' || normalized === 'surprise-examination') normalized = 'unexpected-hanging-paradox';
     const fallback = FALLBACK_WONDERS.find(w => w.slug.toLowerCase() === normalized) || null;
     return this.fetchJson<MathematicalWonder | null>(`/api/wonders/${normalized}`, fallback);
   }
@@ -114,6 +115,7 @@ class MathFrontierApiClient {
   async getVisualizationBySlug(slug: string): Promise<Visualization | null> {
     let normalized = slug.toLowerCase();
     if (normalized === 'banach-tarski-paradox') normalized = 'banach-tarski';
+    if (normalized === 'hanging-paradox' || normalized === 'hanging-paradocs' || normalized === 'surprise-examination') normalized = 'unexpected-hanging-paradox';
     const fallback = FALLBACK_VISUALIZATIONS.find(v => v.slug.toLowerCase() === normalized) || null;
     return this.fetchJson<Visualization | null>(`/api/visualizations/${normalized}`, fallback);
   }

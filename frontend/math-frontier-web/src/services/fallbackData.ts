@@ -970,6 +970,36 @@ export const FALLBACK_WONDERS: MathematicalWonder[] = [
     experimentSlug: 'fractal-lab',
     tags: ['Fractals', 'Paper Folding', 'Plane Tiling'],
     sources: ['Gardner, Martin (1967)']
+  },
+  {
+    id: 19,
+    slug: 'unexpected-hanging-paradox',
+    title: 'The Unexpected Hanging Paradox (Surprise Examination)',
+    shortDescription: 'A condemned prisoner uses backward induction to "prove" he can never be executed by surprise, only to be completely surprised when the executioner knocks.',
+    fullDescription: 'First introduced in the 1940s by Swedish mathematician Lennart Ekbom and popularized by Martin Gardner in Scientific American (1963). A judge decrees that a prisoner will be hanged at noon on one weekday next week, but the day will be a total surprise. By eliminating Friday, then Thursday, through to Monday, the prisoner deduces the hanging is impossible—until the executioner arrives unexpectedly at noon on Wednesday.',
+    categoryId: 8,
+    status: 'PARADOX',
+    intuition: 'If you know you haven\'t been hanged by Thursday night, Friday cannot be a surprise. So Friday is eliminated. By repeating this backward induction, you rule out Thursday, Wednesday, Tuesday, and Monday. Convinced of your safety, when the executioner knocks on Wednesday at noon, you are genuinely surprised! How can rigorous logical deduction lead to a false conclusion?',
+    mathematics: 'Epistemic Logic Formulation: Let H_i denote hanging on day i in {1,...,n}, and K_t phi denote prisoner knowledge at time t. The decree asserts: \\bigvee_{i=1}^n H_i \\land \\bigwedge_{i=1}^n (H_i \\to \\neg K_{i-1} H_i). Backward induction collapses into a Fitch-type knowability contradiction: K(p \\land \\neg K p).',
+    properties: [
+      'Backward induction reasoning across finite discrete time',
+      'Self-defeating epistemic premise: assuming decree is true makes it false, making it true',
+      'Closely related to Fitch\'s Paradox of Knowability and Moore\'s Paradox',
+      'Exposes limits of temporal belief revision and common knowledge in game theory'
+    ],
+    constructionSteps: [
+      '1. Judge decrees execution on Mon-Fri, guaranteeing prisoner cannot foresee day.',
+      '2. Prisoner reasons: If Thursday passes, must be Friday (not a surprise). Rule out Friday.',
+      '3. With Friday impossible, Thursday becomes final available day (not a surprise). Rule out Thursday.',
+      '4. Induction cascades: Wednesday, Tuesday, Monday all eliminated.',
+      '5. Executioner knocks on Wednesday at noon. The prisoner is caught totally unprepared!'
+    ],
+    parametricEquations: 'K_t \\phi \\implies \\phi \\quad \\text{(Axiom T)}, \\quad \\neg K_t (\\text{Hang}_t \\land \\neg K_{t-1} \\text{Hang}_t)',
+    visualizationSlug: 'unexpected-hanging-paradox',
+    hasExperiment: true,
+    experimentSlug: 'hanging-paradox-lab',
+    tags: ['Paradox', 'Epistemic Logic', 'Game Theory', 'Backward Induction', 'Self-Reference', 'Philosophy of Math'],
+    sources: ['Ekbom, Lennart (1943)', 'O\'Connor, D.J. (1948)', 'Quine, W.V. (1953)', 'Gardner, Martin (1963)', 'Kripke, Saul (2011)']
   }
 ];
 
@@ -1015,5 +1045,6 @@ export const FALLBACK_VISUALIZATIONS: Visualization[] = [
   { id: 21, slug: 'sierpinski-triangle', title: 'Sierpiński Triangle Recursive IFS', description: 'Recursive removal and chaos game generation of the Sierpiński gasket.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
   { id: 22, slug: 'koch-snowflake', title: 'Koch Snowflake Infinite Shoreline', description: 'Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
   { id: 23, slug: 'cantor-set', title: 'Cantor Set Middle-Third Construction', description: 'Stage-by-stage removal of the middle third illustrating measure zero and uncountability.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
-  { id: 24, slug: 'dragon-curve', title: 'Heighway Dragon Paper-Folding Fractal', description: 'Recursive paper-folding turn generator and plane-tiling 2D fractal curve.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] }
+  { id: 24, slug: 'dragon-curve', title: 'Heighway Dragon Paper-Folding Fractal', description: 'Recursive paper-folding turn generator and plane-tiling 2D fractal curve.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
+  { id: 25, slug: 'unexpected-hanging-paradox', title: 'Unexpected Hanging Backward Induction Laboratory', description: 'Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] }
 ];

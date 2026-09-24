@@ -4,7 +4,7 @@ import { FALLBACK_PROBLEMS, FALLBACK_WONDERS, FALLBACK_VISUALIZATIONS } from '..
 
 describe('Route & Visualization Integrity', () => {
   it('should have all 18 fallback wonders with complete metadata and working visualizers', () => {
-    expect(FALLBACK_WONDERS.length).toBeGreaterThanOrEqual(18);
+    expect(FALLBACK_WONDERS.length).toBeGreaterThanOrEqual(19);
 
     for (const wonder of FALLBACK_WONDERS) {
       expect(wonder.slug).toBeTruthy();
@@ -69,6 +69,23 @@ describe('Route & Visualization Integrity', () => {
     expect(getVisualEntityRoute('zenos-paradoxes')).toBe('/wonders/zenos-paradoxes');
   });
 
+  it('should register Unexpected Hanging Paradox with interactive laboratory', () => {
+    const hpWonder = FALLBACK_WONDERS.find(w => w.slug === 'unexpected-hanging-paradox');
+    expect(hpWonder).toBeDefined();
+    expect(hpWonder?.status).toBe('PARADOX');
+    expect(hpWonder?.visualizationSlug).toBe('unexpected-hanging-paradox');
+
+    const reg = VISUALIZATION_REGISTRY['unexpected-hanging-paradox'];
+    expect(reg).toBeDefined();
+    expect(reg.title).toContain('Hanging');
+    expect(reg.entityType).toBe('wonder');
+    expect(getVisualEntityRoute('unexpected-hanging-paradox')).toBe('/wonders/unexpected-hanging-paradox');
+
+    // Aliases
+    expect(getVisualEntityRoute('hanging-paradox')).toBe('/wonders/unexpected-hanging-paradox');
+    expect(getVisualEntityRoute('hanging-paradocs')).toBe('/wonders/unexpected-hanging-paradox');
+  });
+
   it('should register Klein Bottle and Mobius Strip with 3D capability', () => {
     const klein = VISUALIZATION_REGISTRY['klein-bottle'];
     expect(klein).toBeDefined();
@@ -96,8 +113,8 @@ describe('Route & Visualization Integrity', () => {
     expect(getVisualEntityRoute('gabriels-horn')).toBe('/wonders/gabriels-horn');
   });
 
-  it('should have all 24 fallback visualizations defined', () => {
-    expect(FALLBACK_VISUALIZATIONS.length).toBeGreaterThanOrEqual(24);
+  it('should have all 25 fallback visualizations defined', () => {
+    expect(FALLBACK_VISUALIZATIONS.length).toBeGreaterThanOrEqual(25);
     for (const vis of FALLBACK_VISUALIZATIONS) {
       expect(vis.slug).toBeTruthy();
       expect(vis.title).toBeTruthy();

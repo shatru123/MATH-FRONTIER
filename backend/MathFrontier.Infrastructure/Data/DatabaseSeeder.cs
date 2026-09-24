@@ -883,6 +883,46 @@ public static class DatabaseSeeder
                 ExperimentSlug = "fractal-lab",
                 Tags = new() { "Fractals", "Paper Folding", "L-System", "Plane Tiling" },
                 Sources = new() { "Gardner, Martin (1967). 'Mathematical Games', Scientific American", "Davis, Chandler & Knuth, Donald (1970)" }
+            },
+            new MathematicalWonder
+            {
+                Id = 19,
+                Slug = "unexpected-hanging-paradox",
+                Title = "The Unexpected Hanging Paradox (Surprise Examination)",
+                ShortDescription = "A condemned prisoner uses backward induction to 'prove' he can never be executed by surprise, only to be completely surprised when the executioner knocks.",
+                FullDescription = "First introduced in the 1940s by Swedish mathematician Lennart Ekbom and popularized by Martin Gardner in Scientific American (1963). A judge decrees that a prisoner will be hanged at noon on one weekday next week, but the day will be a total surprise. By eliminating Friday, then Thursday, through to Monday, the prisoner deduces the hanging is impossible—until the executioner arrives unexpectedly at noon on Wednesday.",
+                CategoryId = catParadoxes.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "If you know you haven't been hanged by Thursday night, Friday cannot be a surprise. So Friday is eliminated. By repeating this backward induction, you rule out Thursday, Wednesday, Tuesday, and Monday. Convinced of your safety, when the executioner knocks on Wednesday at noon, you are genuinely surprised! How can rigorous logical deduction lead to a false conclusion?",
+                Mathematics = @"\text{Epistemic Logic Formulation: Let } H_i \text{ denote hanging on day } i \in \{1,\dots,n\}, \text{ and } K_t \phi \text{ denote the prisoner's knowledge at time } t. \text{ The judge's decree asserts: } \bigvee_{i=1}^n H_i \land \bigwedge_{i=1}^n (H_i \to \neg K_{i-1} H_i). \text{ The backward induction argument presumes common knowledge of the judge's truthfulness and consistency, which self-destructs into a Fitch-type knowability contradiction: } K(p \land \neg K p).",
+                Properties = new()
+                {
+                    "Backward induction reasoning across finite discrete time",
+                    "Self-defeating epistemic premise: assuming decree is true makes it false, making it true",
+                    "Closely related to Fitch's Paradox of Knowability and Moore's Paradox",
+                    "Exposes limits of temporal belief revision and common knowledge in game theory"
+                },
+                ConstructionSteps = new()
+                {
+                    "1. Judge decrees execution on Mon-Fri, guaranteeing prisoner cannot foresee day.",
+                    "2. Prisoner reasons: If Thursday passes, must be Friday (not a surprise). Rule out Friday.",
+                    "3. With Friday impossible, Thursday becomes final available day (not a surprise). Rule out Thursday.",
+                    "4. Induction cascades: Wednesday, Tuesday, Monday all eliminated.",
+                    "5. Executioner knocks on Wednesday at noon. The prisoner is caught totally unprepared!"
+                },
+                ParametricEquations = @"K_{t} \phi \implies \phi \quad \text{(Axiom T)}, \quad \neg K_{t} (\text{Hang}_t \land \neg K_{t-1} \text{Hang}_t)",
+                VisualizationSlug = "unexpected-hanging-paradox",
+                HasExperiment = true,
+                ExperimentSlug = "hanging-paradox-lab",
+                Tags = new() { "Paradox", "Epistemic Logic", "Game Theory", "Backward Induction", "Self-Reference", "Philosophy of Math" },
+                Sources = new()
+                {
+                    "Ekbom, Lennart (1943). First formulated the paradox in Sweden.",
+                    "O'Connor, D.J. (1948). 'Pragmatic Paradoxes', Mind 57: 358–359.",
+                    "Quine, W.V. (1953). 'On a So-called Paradox', Mind 62: 65–67.",
+                    "Gardner, Martin (1963). 'The Unexpected Hanging and Other Mathematical Diversions'.",
+                    "Kripke, Saul (2011). 'Philosophical Troubles: Collected Papers, Vol. 1'."
+                }
             }
         };
 
@@ -952,7 +992,8 @@ public static class DatabaseSeeder
             new Visualization { Id = 21, Slug = "sierpinski-triangle", Title = "Sierpiński Triangle Recursive IFS", Description = "Recursive removal and chaos game generation of the Sierpiński gasket.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 22, Slug = "koch-snowflake", Title = "Koch Snowflake Infinite Shoreline", Description = "Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 23, Slug = "cantor-set", Title = "Cantor Set Middle-Third Construction", Description = "Stage-by-stage removal of the middle third illustrating measure zero and uncountability.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
-            new Visualization { Id = 24, Slug = "dragon-curve", Title = "Heighway Dragon Paper-Folding Fractal", Description = "Recursive paper-folding turn generator and plane-tiling 2D fractal curve.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } }
+            new Visualization { Id = 24, Slug = "dragon-curve", Title = "Heighway Dragon Paper-Folding Fractal", Description = "Recursive paper-folding turn generator and plane-tiling 2D fractal curve.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
+            new Visualization { Id = 25, Slug = "unexpected-hanging-paradox", Title = "Unexpected Hanging Backward Induction Laboratory", Description = "Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } }
         };
 
         foreach (var v in visualizations)
