@@ -88,7 +88,7 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({ isOpen
           </span>
 
           <p className="text-xs text-slate-300 mt-3 leading-relaxed max-w-sm">
-            Architected LearningOS to deliver a resilient, career-grade 100-day engineering and AI learning system.
+            Architected Math Frontier as a modern digital mathematics museum, interactive 3D laboratory, and peer-verified knowledge repository exploring the boundaries of mathematics.
           </p>
 
           <div className="w-full space-y-2 mt-5 text-xs">
@@ -105,12 +105,12 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({ isOpen
               <span>📞</span> +91 9604466334
             </a>
             <a
-              href="https://github.com/shatru123/Learning"
+              href="https://github.com/shatru123/MATH-FRONTIER"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-800/80 hover:bg-purple-600/20 text-purple-300 border border-slate-700/80 hover:border-purple-500/50 transition font-medium"
             >
-              <span>🐙</span> GitHub Repository
+              <span>🐙</span> GitHub: MATH-FRONTIER
             </a>
           </div>
 
