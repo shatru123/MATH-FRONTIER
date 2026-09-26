@@ -26,6 +26,21 @@
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950 min-h-screen">
     <div id="root"></div>
+    <script>
+      window.openModal = function(id) {
+        if (id === 'modal-profile') {
+          window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+        }
+      };
+      window.closeModal = function(id) {
+        if (id === 'modal-profile') {
+          window.dispatchEvent(new CustomEvent('mathfrontier:close-profile'));
+        }
+      };
+      window.openProfileModal = function() {
+        window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+      };
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

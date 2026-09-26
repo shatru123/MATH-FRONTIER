@@ -154,4 +154,10 @@ describe('Route & Visualization Integrity', () => {
       expect(vis.supportedModes.length).toBeGreaterThan(0);
     }
   });
+
+  it('should export CreatorProfileModal and support modal-profile trigger', async () => {
+    const { CreatorProfileModal } = await import('../components/layout/CreatorProfileModal');
+    expect(CreatorProfileModal).toBeDefined();
+    expect(typeof CreatorProfileModal).toBe('function');
+  });
 });

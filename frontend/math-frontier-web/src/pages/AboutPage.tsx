@@ -46,10 +46,42 @@ export const AboutPage: React.FC = () => {
         <p className="text-slate-300">
           Math Frontier was designed and created by <strong>Shatrughna Ambhore</strong> as a modern digital mathematics museum, interactive 3D laboratory, and rigorous knowledge repository.
         </p>
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-          <div>
-            <span className="text-slate-500 block text-[10px] uppercase">Creator</span>
-            <span className="text-slate-100 font-bold text-sm">Shatrughna Ambhore</span>
+        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof (window as any).openProfileModal === 'function') {
+                  (window as any).openProfileModal();
+                } else {
+                  window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+                }
+              }}
+              className="focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-full group cursor-pointer transition transform hover:scale-105 active:scale-95 shrink-0"
+              title="Click to view creator profile photo"
+            >
+              <img
+                src="/images/shatrughna.jpg"
+                alt="Shatrughna Ambhore"
+                className="w-11 h-11 rounded-full object-cover ring-2 ring-cyan-500/40 group-hover:ring-cyan-400 shadow transition"
+              />
+            </button>
+            <div>
+              <span className="text-slate-500 block text-[10px] uppercase">Creator</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof (window as any).openProfileModal === 'function') {
+                    (window as any).openProfileModal();
+                  } else {
+                    window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+                  }
+                }}
+                className="text-slate-100 font-bold text-sm hover:text-cyan-400 underline decoration-slate-700 hover:decoration-cyan-400 transition text-left cursor-pointer"
+              >
+                Shatrughna Ambhore
+              </button>
+            </div>
           </div>
           <div>
             <span className="text-slate-500 block text-[10px] uppercase">Email</span>

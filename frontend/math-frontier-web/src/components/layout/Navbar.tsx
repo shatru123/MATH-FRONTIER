@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Compass, Sparkles, Layers, History, CheckCircle, Menu, X, BookOpen } from 'lucide-react';
 import { SearchModal } from './SearchModal';
+import { CreatorProfileModal } from './CreatorProfileModal';
 
 export const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const location = useLocation();
+
+  // Global event listener to open/close creator profile from anywhere
+  useEffect(() => {
+    const openHandler = () => setIsProfileOpen(true);
+    const closeHandler = () => setIsProfileOpen(false);
+    window.addEventListener('mathfrontier:open-profile', openHandler);
+    window.addEventListener('mathfrontier:close-profile', closeHandler);
+    return () => {
+      window.removeEventListener('mathfrontier:open-profile', openHandler);
+      window.removeEventListener('mathfrontier:close-profile', closeHandler);
+    };
+  }, []);
 
   // Keyboard shortcut Cmd+K or Ctrl+K
   useEffect(() => {
@@ -70,7 +84,7 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Search Trigger & Mobile Hamburger */}
+          {/* Search Trigger, Creator Avatar & Mobile Hamburger */}
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -83,6 +97,24 @@ export const Navbar: React.FC = () => {
               <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] bg-slate-950 border border-slate-700 rounded text-slate-400">
                 ⌘K
               </kbd>
+            </button>
+
+            {/* Creator Profile Button */}
+            <button
+              type="button"
+              onClick={() => setIsProfileOpen(true)}
+              className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 hover:text-white transition group shrink-0"
+              title="Shatrughna Ambhore — Platform Creator"
+            >
+              <div className="relative">
+                <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 opacity-60 group-hover:opacity-100 blur-[2px] transition"></div>
+                <img
+                  src="/images/shatrughna.jpg"
+                  alt="Shatrughna Ambhore"
+                  className="relative w-6 h-6 rounded-full object-cover ring-1 ring-slate-700 group-hover:ring-cyan-400 transition"
+                />
+              </div>
+              <span className="hidden lg:inline text-[11px] font-medium text-slate-300 group-hover:text-cyan-400">Creator</span>
             </button>
 
             {/* Mobile menu toggle */}
@@ -113,17 +145,45 @@ export const Navbar: React.FC = () => {
                 </Link>
               );
             })}
+
+            {/* Mobile Creator Profile Link */}
+            <button
+              type="button"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsProfileOpen(true);
+              }}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 w-full text-left"
+            >
+              <img
+                src="/images/shatrughna.jpg"
+                alt="Shatrughna Ambhore"
+                className="w-5 h-5 rounded-full object-cover ring-1 ring-cyan-500/40"
+              />
+              <span>Creator Profile (Shatrughna Ambhore)</span>
+            </button>
           </div>
         )}
       </header>
 
       {/* Global Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
+      {/* Creator Profile Photo & Details Modal */}
+      <CreatorProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
     </>
   );
 };
 
 export const Footer: React.FC = () => {
+  const handleOpenProfile = () => {
+    if (typeof (window as any).openProfileModal === 'function') {
+      (window as any).openProfileModal();
+    } else {
+      window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+    }
+  };
+
   return (
     <footer className="w-full border-t border-slate-800/80 bg-slate-950/90 py-12 relative z-10 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
@@ -172,10 +232,39 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-        <div>
-          <span>&copy; {new Date().getFullYear()} Math Frontier. All mathematical citations peer-verified.</span>
-          <div className="mt-1 text-slate-400">
-            Created by <strong className="text-cyan-400 font-medium">Shatrughna Ambhore</strong> • <a href="mailto:ambhoreshatrughna@gmail.com" className="text-cyan-400 hover:underline">ambhoreshatrughna@gmail.com</a> • <a href="tel:+919604466334" className="text-cyan-400 hover:underline">+91 9604466334</a>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleOpenProfile}
+            className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-full group cursor-pointer transition transform hover:scale-110 active:scale-95 shrink-0"
+            title="Click to view full profile photo"
+          >
+            <img
+              src="/images/shatrughna.jpg"
+              alt="Shatrughna Ambhore"
+              className="w-8 h-8 rounded-full object-cover ring-2 ring-slate-800 group-hover:ring-blue-500 shadow transition"
+            />
+          </button>
+          <div>
+            <span>&copy; {new Date().getFullYear()} Math Frontier. All mathematical citations peer-verified.</span>
+            <div className="mt-1 text-slate-400">
+              Created by{' '}
+              <button
+                type="button"
+                onClick={handleOpenProfile}
+                className="text-slate-100 font-semibold hover:text-cyan-400 underline decoration-slate-600 hover:decoration-cyan-400 transition cursor-pointer"
+              >
+                Shatrughna Ambhore
+              </button>{' '}
+              •{' '}
+              <a href="mailto:ambhoreshatrughna@gmail.com" className="text-cyan-400 hover:underline">
+                ambhoreshatrughna@gmail.com
+              </a>{' '}
+              •{' '}
+              <a href="tel:+919604466334" className="text-cyan-400 hover:underline">
+                +91 9604466334
+              </a>
+            </div>
           </div>
         </div>
       </div>

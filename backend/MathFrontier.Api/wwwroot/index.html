@@ -23,10 +23,25 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>∰</text></svg>">
-    <script type="module" crossorigin src="/assets/index-UO85sYYC.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Ba4od0Pv.css">
+    <script type="module" crossorigin src="/assets/index-7zVw6Eff.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C83PWs1n.css">
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950 min-h-screen">
     <div id="root"></div>
+    <script>
+      window.openModal = function(id) {
+        if (id === 'modal-profile') {
+          window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+        }
+      };
+      window.closeModal = function(id) {
+        if (id === 'modal-profile') {
+          window.dispatchEvent(new CustomEvent('mathfrontier:close-profile'));
+        }
+      };
+      window.openProfileModal = function() {
+        window.dispatchEvent(new CustomEvent('mathfrontier:open-profile'));
+      };
+    </script>
   </body>
 </html>
