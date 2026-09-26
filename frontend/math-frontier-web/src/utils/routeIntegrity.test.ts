@@ -3,8 +3,8 @@ import { VISUALIZATION_REGISTRY, getVisualizationComponent, getVisualEntityRoute
 import { FALLBACK_PROBLEMS, FALLBACK_WONDERS, FALLBACK_VISUALIZATIONS } from '../services/fallbackData';
 
 describe('Route & Visualization Integrity', () => {
-  it('should have all 18 fallback wonders with complete metadata and working visualizers', () => {
-    expect(FALLBACK_WONDERS.length).toBeGreaterThanOrEqual(19);
+  it('should have all 22 fallback wonders with complete metadata and working visualizers', () => {
+    expect(FALLBACK_WONDERS.length).toBeGreaterThanOrEqual(22);
 
     for (const wonder of FALLBACK_WONDERS) {
       expect(wonder.slug).toBeTruthy();
@@ -86,6 +86,38 @@ describe('Route & Visualization Integrity', () => {
     expect(getVisualEntityRoute('hanging-paradocs')).toBe('/wonders/unexpected-hanging-paradox');
   });
 
+  it('should register 3D Geometric Shape Paradoxes (Penrose Triangle, Penrose Stairs, Impossible Cube)', () => {
+    const paradoxes = [
+      { slug: 'penrose-triangle', aliases: ['tribar', 'impossible-triangle'] },
+      { slug: 'penrose-stairs', aliases: ['penrose-staircase', 'impossible-stairs'] },
+      { slug: 'impossible-cube', aliases: ['eschers-cube'] },
+    ];
+
+    for (const { slug, aliases } of paradoxes) {
+      const wonder = FALLBACK_WONDERS.find(w => w.slug === slug);
+      expect(wonder).toBeDefined();
+      expect(wonder?.status).toBe('PARADOX');
+      expect(wonder?.categoryId).toBe(3);
+      expect(wonder?.visualizationSlug).toBe(slug);
+
+      const reg = VISUALIZATION_REGISTRY[slug];
+      expect(reg).toBeDefined();
+      expect(reg.isThreeD).toBe(true);
+      expect(reg.entityType).toBe('wonder');
+      expect(getVisualEntityRoute(slug)).toBe(`/wonders/${slug}`);
+
+      const comp = getVisualizationComponent(slug);
+      expect(comp).toBeDefined();
+      expect(comp).not.toBeNull();
+
+      for (const alias of aliases) {
+        expect(getVisualEntityRoute(alias)).toBe(`/wonders/${slug}`);
+        const aliasComp = getVisualizationComponent(alias);
+        expect(aliasComp).toBeDefined();
+      }
+    }
+  });
+
   it('should register Klein Bottle and Mobius Strip with 3D capability', () => {
     const klein = VISUALIZATION_REGISTRY['klein-bottle'];
     expect(klein).toBeDefined();
@@ -113,8 +145,8 @@ describe('Route & Visualization Integrity', () => {
     expect(getVisualEntityRoute('gabriels-horn')).toBe('/wonders/gabriels-horn');
   });
 
-  it('should have all 25 fallback visualizations defined', () => {
-    expect(FALLBACK_VISUALIZATIONS.length).toBeGreaterThanOrEqual(25);
+  it('should have all 28 fallback visualizations defined', () => {
+    expect(FALLBACK_VISUALIZATIONS.length).toBeGreaterThanOrEqual(28);
     for (const vis of FALLBACK_VISUALIZATIONS) {
       expect(vis.slug).toBeTruthy();
       expect(vis.title).toBeTruthy();

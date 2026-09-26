@@ -100,6 +100,9 @@ public class WonderRepository : IWonderRepository
         var slugLower = slug.ToLower();
         if (slugLower == "banach-tarski") slugLower = "banach-tarski-paradox";
         if (slugLower == "hanging-paradox" || slugLower == "hanging-paradocs" || slugLower == "surprise-examination") slugLower = "unexpected-hanging-paradox";
+        if (slugLower == "tribar" || slugLower == "impossible-tribar" || slugLower == "impossible-triangle") slugLower = "penrose-triangle";
+        if (slugLower == "penrose-staircase" || slugLower == "impossible-stairs" || slugLower == "impossible-staircase") slugLower = "penrose-stairs";
+        if (slugLower == "eschers-cube" || slugLower == "escher-cube") slugLower = "impossible-cube";
         return await _context.Wonders
             .Include(w => w.Category)
             .FirstOrDefaultAsync(w => w.Slug.ToLower() == slugLower);
@@ -126,6 +129,9 @@ public class VisualizationRepository : IVisualizationRepository
         if (slugLower == "banach-tarski-paradox") slugLower = "banach-tarski";
         if (slugLower == "navier-stokes-smoothness") slugLower = "navier-stokes";
         if (slugLower == "hanging-paradox" || slugLower == "hanging-paradocs" || slugLower == "surprise-examination") slugLower = "unexpected-hanging-paradox";
+        if (slugLower == "tribar" || slugLower == "impossible-tribar" || slugLower == "impossible-triangle") slugLower = "penrose-triangle";
+        if (slugLower == "penrose-staircase" || slugLower == "impossible-stairs" || slugLower == "impossible-staircase") slugLower = "penrose-stairs";
+        if (slugLower == "eschers-cube" || slugLower == "escher-cube") slugLower = "impossible-cube";
         return await _context.Visualizations.FirstOrDefaultAsync(v => v.Slug.ToLower() == slugLower);
     }
 }

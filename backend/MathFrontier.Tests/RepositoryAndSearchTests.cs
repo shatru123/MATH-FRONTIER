@@ -127,13 +127,55 @@ public class RepositoryAndSearchTests
     }
 
     [Fact]
+    public async Task Geometric3DParadoxes_AreSeededAndConfigured()
+    {
+        using var context = await CreateContextAsync();
+        var wonderRepo = new WonderRepository(context);
+        var visRepo = new VisualizationRepository(context);
+
+        var penroseTri = await wonderRepo.GetBySlugAsync("penrose-triangle");
+        Assert.NotNull(penroseTri);
+        Assert.Equal(ProblemStatus.PARADOX, penroseTri.Status);
+        Assert.Equal("penrose-triangle", penroseTri.VisualizationSlug);
+        Assert.True(penroseTri.HasExperiment);
+
+        // Alias test
+        var tribarAlias = await wonderRepo.GetBySlugAsync("tribar");
+        Assert.NotNull(tribarAlias);
+        Assert.Equal("penrose-triangle", tribarAlias.Slug);
+
+        var penroseStairs = await wonderRepo.GetBySlugAsync("penrose-stairs");
+        Assert.NotNull(penroseStairs);
+        Assert.Equal(ProblemStatus.PARADOX, penroseStairs.Status);
+        Assert.Equal("penrose-stairs", penroseStairs.VisualizationSlug);
+
+        var impCube = await wonderRepo.GetBySlugAsync("impossible-cube");
+        Assert.NotNull(impCube);
+        Assert.Equal(ProblemStatus.PARADOX, impCube.Status);
+        Assert.Equal("impossible-cube", impCube.VisualizationSlug);
+
+        // Visualizations 3D verification
+        var triVis = await visRepo.GetBySlugAsync("penrose-triangle");
+        Assert.NotNull(triVis);
+        Assert.Equal(VisualizationType.ThreeD, triVis.Type);
+
+        var stairsVis = await visRepo.GetBySlugAsync("penrose-stairs");
+        Assert.NotNull(stairsVis);
+        Assert.Equal(VisualizationType.ThreeD, stairsVis.Type);
+
+        var cubeVis = await visRepo.GetBySlugAsync("impossible-cube");
+        Assert.NotNull(cubeVis);
+        Assert.Equal(VisualizationType.ThreeD, cubeVis.Type);
+    }
+
+    [Fact]
     public async Task AllRequiredWondersAndProblems_AreSeeded()
     {
         using var context = await CreateContextAsync();
         var wonders = await context.Wonders.ToListAsync();
         var problems = await context.Problems.ToListAsync();
 
-        Assert.True(wonders.Count >= 19, $"Expected >= 19 wonders, found {wonders.Count}");
+        Assert.True(wonders.Count >= 22, $"Expected >= 22 wonders, found {wonders.Count}");
         Assert.True(problems.Count >= 13, $"Expected >= 13 problems, found {problems.Count}");
 
         var requiredWonderSlugs = new[]
@@ -142,7 +184,8 @@ public class RepositoryAndSearchTests
             "mandelbrot-set", "hyperbolic-geometry", "zenos-paradoxes", "projective-plane",
             "cantors-diagonal-argument", "birthday-paradox", "monty-hall-problem",
             "gabriels-horn", "julia-set", "sierpinski-triangle", "koch-snowflake",
-            "cantor-set", "dragon-curve", "unexpected-hanging-paradox"
+            "cantor-set", "dragon-curve", "unexpected-hanging-paradox",
+            "penrose-triangle", "penrose-stairs", "impossible-cube"
         };
 
         foreach (var slug in requiredWonderSlugs)

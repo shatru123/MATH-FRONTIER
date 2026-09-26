@@ -19,6 +19,9 @@ import { RiemannHypothesisLab } from './RiemannHypothesisLab';
 import { PvsNPLab } from './PvsNPLab';
 import { PoincareConjectureScene } from './PoincareConjectureScene';
 import { HangingParadoxLab } from './HangingParadoxLab';
+import { PenroseTriangleScene } from './PenroseTriangleScene';
+import { PenroseStairsScene } from './PenroseStairsScene';
+import { ImpossibleCubeScene } from './ImpossibleCubeScene';
 
 // Fractal wrapper components
 const JuliaSetLab: React.FC = () => <FractalLab initialType="julia" />;
@@ -334,6 +337,78 @@ export const VISUALIZATION_REGISTRY: Record<string, VisualizationRegistryEntry> 
     isThreeD: false,
     entityType: 'wonder',
     entitySlug: 'unexpected-hanging-paradox'
+  },
+  'penrose-triangle': {
+    title: 'Penrose Triangle 3D Illusion',
+    description: 'Impossible tribar in true 3D space with calibrated depth gap and illusion vantage lock.',
+    component: PenroseTriangleScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-triangle'
+  },
+  'tribar': {
+    title: 'Penrose Triangle 3D Illusion',
+    description: 'Impossible tribar in true 3D space with calibrated depth gap and illusion vantage lock.',
+    component: PenroseTriangleScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-triangle'
+  },
+  'impossible-triangle': {
+    title: 'Penrose Triangle 3D Illusion',
+    description: 'Impossible tribar in true 3D space with calibrated depth gap and illusion vantage lock.',
+    component: PenroseTriangleScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-triangle'
+  },
+  'penrose-stairs': {
+    title: 'Penrose Endless Stairs 3D',
+    description: 'Continuous 4-flight ascending staircase with climbing marble animation and elevation drop inspection.',
+    component: PenroseStairsScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-stairs'
+  },
+  'penrose-staircase': {
+    title: 'Penrose Endless Stairs 3D',
+    description: 'Continuous 4-flight ascending staircase with climbing marble animation and elevation drop inspection.',
+    component: PenroseStairsScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-stairs'
+  },
+  'impossible-stairs': {
+    title: 'Penrose Endless Stairs 3D',
+    description: 'Continuous 4-flight ascending staircase with climbing marble animation and elevation drop inspection.',
+    component: PenroseStairsScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'penrose-stairs'
+  },
+  'impossible-cube': {
+    title: "Escher's Impossible Cube 3D",
+    description: 'Belvedere cube framework with depth transitivity cycle inspector and perspective trick alignment.',
+    component: ImpossibleCubeScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'impossible-cube'
+  },
+  'eschers-cube': {
+    title: "Escher's Impossible Cube 3D",
+    description: 'Belvedere cube framework with depth transitivity cycle inspector and perspective trick alignment.',
+    component: ImpossibleCubeScene,
+    category: 'Geometry',
+    isThreeD: true,
+    entityType: 'wonder',
+    entitySlug: 'impossible-cube'
   }
 };
 

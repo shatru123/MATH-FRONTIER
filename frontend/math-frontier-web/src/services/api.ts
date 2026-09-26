@@ -104,6 +104,9 @@ class MathFrontierApiClient {
     let normalized = slug.toLowerCase();
     if (normalized === 'banach-tarski') normalized = 'banach-tarski-paradox';
     if (normalized === 'hanging-paradox' || normalized === 'hanging-paradocs' || normalized === 'surprise-examination') normalized = 'unexpected-hanging-paradox';
+    if (normalized === 'tribar' || normalized === 'impossible-tribar' || normalized === 'impossible-triangle') normalized = 'penrose-triangle';
+    if (normalized === 'penrose-staircase' || normalized === 'impossible-stairs' || normalized === 'impossible-staircase') normalized = 'penrose-stairs';
+    if (normalized === 'eschers-cube' || normalized === 'escher-cube') normalized = 'impossible-cube';
     const fallback = FALLBACK_WONDERS.find(w => w.slug.toLowerCase() === normalized) || null;
     return this.fetchJson<MathematicalWonder | null>(`/api/wonders/${normalized}`, fallback);
   }
@@ -116,6 +119,9 @@ class MathFrontierApiClient {
     let normalized = slug.toLowerCase();
     if (normalized === 'banach-tarski-paradox') normalized = 'banach-tarski';
     if (normalized === 'hanging-paradox' || normalized === 'hanging-paradocs' || normalized === 'surprise-examination') normalized = 'unexpected-hanging-paradox';
+    if (normalized === 'tribar' || normalized === 'impossible-tribar' || normalized === 'impossible-triangle') normalized = 'penrose-triangle';
+    if (normalized === 'penrose-staircase' || normalized === 'impossible-stairs' || normalized === 'impossible-staircase') normalized = 'penrose-stairs';
+    if (normalized === 'eschers-cube' || normalized === 'escher-cube') normalized = 'impossible-cube';
     const fallback = FALLBACK_VISUALIZATIONS.find(v => v.slug.toLowerCase() === normalized) || null;
     return this.fetchJson<Visualization | null>(`/api/visualizations/${normalized}`, fallback);
   }

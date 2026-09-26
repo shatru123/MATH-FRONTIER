@@ -923,6 +923,121 @@ public static class DatabaseSeeder
                     "Gardner, Martin (1963). 'The Unexpected Hanging and Other Mathematical Diversions'.",
                     "Kripke, Saul (2011). 'Philosophical Troubles: Collected Papers, Vol. 1'."
                 }
+            },
+            new MathematicalWonder
+            {
+                Id = 20,
+                Slug = "penrose-triangle",
+                Title = "The Penrose Triangle (Impossible Tribar)",
+                ShortDescription = "The iconic impossible 3D shape: three straight beams of square cross-section meeting at right angles, forming a closed triangle that cannot exist in Euclidean 3D space.",
+                FullDescription = "First created in 1934 by Swedish artist Oscar Reutersvärd and independently discovered and popularized in 1958 by mathematician Roger Penrose and his father Lionel Penrose. Known as 'impossibility in its purest form', it inspired M.C. Escher's famous lithograph 'Waterfall' (1961). In true 3D space, physical models must incorporate a spatial gap or distorted helical twist that only aligns into a seamless closed triangle from one singular isometric vantage point.",
+                CategoryId = catGeometry.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "Each corner appears as a standard orthogonal 90-degree joint between two beams. When you follow the beams around all three corners, your eye traverses three right angles—yet ends up right back where it started, implying an impossible triangle whose interior angles sum to 270 degrees in flat space!",
+                Mathematics = @"\text{Cohomological Formulation (Roger Penrose, 1992): Let } X \text{ be the 2D projection and } \mathcal{F} \text{ be the sheaf of local 3D depth assignments. While local depth coordinate patches } U_i \subset \mathbb{R}^3 \text{ exist consistently at each vertex, the cocycle condition fails on triple intersections: } \delta(c) \neq 0 \implies H^1(X, \mathcal{F}) \neq 0. \text{ The non-vanishing of the first cohomology group represents the topological obstruction to embedding the object in } \mathbb{R}^3.",
+                Properties = new()
+                {
+                    "Three mutually perpendicular square beams meeting at 90-degree corners",
+                    "Apparent interior angle sum: 90° + 90° + 90° = 270°",
+                    "Requires non-zero first sheaf cohomology H^1(X, F) != 0 to classify as impossible",
+                    "Physical 3D construction requires an open gap aligned precisely along line of sight"
+                },
+                ConstructionSteps = new()
+                {
+                    "1. Construct beam 1 along the X axis from (0,0,0) to (L,0,0).",
+                    "2. Construct beam 2 along the Y axis from (0,0,0) to (0,L,0).",
+                    "3. Construct beam 3 extending forward in Z toward the camera from (0,L,0) to (0,L,D).",
+                    "4. Turn toward (L,0,0) ending with a deliberate depth gap behind beam 1.",
+                    "5. Place an isometric camera at theta = 35.264°, phi = 45° where the gap visually closes."
+                },
+                ParametricEquations = @"P = \begin{bmatrix} \cos 30^\circ & -\cos 30^\circ & 0 \\ -\sin 30^\circ & -\sin 30^\circ & 1 \end{bmatrix}, \quad H^1(X, \mathcal{F}) \neq 0",
+                VisualizationSlug = "penrose-triangle",
+                HasExperiment = true,
+                ExperimentSlug = "penrose-triangle-3d",
+                Tags = new() { "Impossible Object", "Geometry", "Paradox", "Interactive 3D", "Cohomology", "Escher" },
+                Sources = new()
+                {
+                    "Reutersvärd, Oscar (1934). Opus 1 No. 293.",
+                    "Penrose, L. S. & Penrose, R. (1958). 'Impossible objects: A special type of visual illusion', British Journal of Psychology 49: 31–33.",
+                    "Penrose, Roger (1992). 'On the Cohomology of Impossible Figures', Leonardo 25(3/4): 245–247.",
+                    "Escher, M. C. (1961). 'Waterfall' lithograph."
+                }
+            },
+            new MathematicalWonder
+            {
+                Id = 21,
+                Slug = "penrose-stairs",
+                Title = "The Penrose Stairs (Impossible Staircase)",
+                ShortDescription = "An endless circular four-flight staircase where every step climbs upward, yet perpetually returns to its starting point without gaining elevation.",
+                FullDescription = "Created by Lionel and Roger Penrose in 1958 as a variation of the Penrose triangle and immortalized by M.C. Escher in his renowned 1960 print 'Ascending and Descending'. In physics and vector calculus, the staircase represents a non-conservative gradient paradox: climbing around a closed loop would allow an infinite extraction of gravitational potential energy.",
+                CategoryId = catGeometry.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "Imagine walking up four flights of stairs arranged in a square. You take step after step upward, your legs tiring as you gain altitude on each flight. Yet upon turning the fourth corner, you find yourself stepping onto the bottom step of flight one! In 3D reality, an optical alignment hides a massive vertical drop.",
+                Mathematics = @"\text{Vector Field Non-Conservatism: In classical mechanics, gravity is a conservative field } \mathbf{F} = -\nabla \Phi. \text{ Around any closed loop } C, \text{ the path integral must vanish: } \oint_C \mathbf{F} \cdot d\mathbf{r} = 0. \text{ On Penrose stairs, each step has } \Delta z > 0, \text{ implying } \oint_C \nabla \Phi \cdot d\mathbf{r} = 4N \Delta h > 0, \text{ violating the fundamental theorem of calculus for line integrals.}",
+                Properties = new()
+                {
+                    "Four continuous flights of ascending steps arranged in a square loop",
+                    "Perpetual motion loop violating conservation of gravitational potential energy",
+                    "Closed curve path integral with non-zero curl of gradient: curl(grad Phi) != 0",
+                    "3D realization requires an optical elevation drop concealed by perspective"
+                },
+                ConstructionSteps = new()
+                {
+                    "1. Flight 1: Ascend 4 steps in the +X direction from z = 0 to z = h.",
+                    "2. Flight 2: Ascend 4 steps in the +Y direction from z = h to z = 2h.",
+                    "3. Flight 3: Ascend 4 steps in the -X direction from z = 2h to z = 3h.",
+                    "4. Flight 4: Ascend 4 steps in the -Y direction from z = 3h to z = 4h.",
+                    "5. Position camera so the top of flight 4 visually overlaps the bottom of flight 1."
+                },
+                ParametricEquations = @"\oint_C \nabla \Phi \cdot d\mathbf{r} = \Delta \Phi_{\text{net}} = 4N \Delta h \neq 0",
+                VisualizationSlug = "penrose-stairs",
+                HasExperiment = true,
+                ExperimentSlug = "penrose-stairs-3d",
+                Tags = new() { "Impossible Object", "Geometry", "Paradox", "Interactive 3D", "Vector Calculus", "Escher" },
+                Sources = new()
+                {
+                    "Penrose, L. S. & Penrose, R. (1958). 'Impossible objects: A special type of visual illusion', British Journal of Psychology.",
+                    "Escher, M. C. (1960). 'Ascending and Descending' lithograph.",
+                    "Dawson, J. W. (1984). 'The Gödel sentence and the impossible staircase'."
+                }
+            },
+            new MathematicalWonder
+            {
+                Id = 22,
+                Slug = "impossible-cube",
+                Title = "The Impossible Cube (Escher's Cube)",
+                ShortDescription = "A geometric cube framework whose structural beams connect front-to-back in an impossible knot, violating Euclidean depth transitivity.",
+                FullDescription = "Invented by M.C. Escher in his 1958 lithograph 'Belvedere', where a boy seated on a bench holds the bizarre construct. In a normal cube, front edges lie strictly in front of back edges. In the impossible cube, front-facing vertical pillars cross behind back-facing horizontal beams and connect to rear vertices, creating an irreconcilable topological and depth paradox.",
+                CategoryId = catGeometry.Id,
+                Status = ProblemStatus.PARADOX,
+                Intuition = "Look at the front-left vertical post: at the bottom, it stands in front of the cube. Follow it upward, and suddenly it connects to the back-left corner of the roof! The cube defies our brain's 3D depth-sorting algorithm by presenting conflicting occlusion cues simultaneously.",
+                Mathematics = @"\text{Depth Transitivity Violation: Let } A \prec B \text{ denote 'object } A \text{ is in front of object } B \text{ along line of sight } \mathbf{v}'. \text{ A valid 3D scene requires } \prec \text{ to be a strict partial order (transitive and asymmetric). The impossible cube introduces an intransitive cycle: } v_1 \prec v_2 \prec v_3 \prec v_1, \text{ which cannot be satisfied by any height function } z: V \to \mathbb{R}.",
+                Properties = new()
+                {
+                    "Twelve orthogonal beams forming a cube-like skeletal framework",
+                    "Front and back vertical struts swap depth coordinates at upper and lower joints",
+                    "Violates transitivity of visual depth ordering: a < b < c < a",
+                    "Can be realized in 3D using notched overlapping joints or foreshortened non-planar beams"
+                },
+                ConstructionSteps = new()
+                {
+                    "1. Construct 12 square beams forming the 8 vertices of a rectangular box.",
+                    "2. Offset the front-right strut backward in depth Z at the upper junction.",
+                    "3. Offset the back-left strut forward in depth Z at the lower junction.",
+                    "4. Add visual cutouts or mitred intersections that create ambiguous occlusion.",
+                    "5. View through an isometric projection where contradictory overlaps align."
+                },
+                ParametricEquations = @"v_i \prec v_j \land v_j \prec v_k \land v_k \prec v_i \implies \text{Intransitive Depth Cycle}",
+                VisualizationSlug = "impossible-cube",
+                HasExperiment = true,
+                ExperimentSlug = "impossible-cube-3d",
+                Tags = new() { "Impossible Object", "Geometry", "Paradox", "Interactive 3D", "Depth Sorting", "Escher" },
+                Sources = new()
+                {
+                    "Escher, M. C. (1958). 'Belvedere' lithograph.",
+                    "Cowan, T. M. (1974). 'The theory of braids and the analysis of impossible figures'.",
+                    "Sugihara, Kokichi (1986). 'Machine Interpretation of Line Drawings', MIT Press."
+                }
             }
         };
 
@@ -993,7 +1108,10 @@ public static class DatabaseSeeder
             new Visualization { Id = 22, Slug = "koch-snowflake", Title = "Koch Snowflake Infinite Shoreline", Description = "Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 23, Slug = "cantor-set", Title = "Cantor Set Middle-Third Construction", Description = "Stage-by-stage removal of the middle third illustrating measure zero and uncountability.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
             new Visualization { Id = 24, Slug = "dragon-curve", Title = "Heighway Dragon Paper-Folding Fractal", Description = "Recursive paper-folding turn generator and plane-tiling 2D fractal curve.", Type = VisualizationType.Canvas2D, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided } },
-            new Visualization { Id = 25, Slug = "unexpected-hanging-paradox", Title = "Unexpected Hanging Backward Induction Laboratory", Description = "Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } }
+            new Visualization { Id = 25, Slug = "unexpected-hanging-paradox", Title = "Unexpected Hanging Backward Induction Laboratory", Description = "Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.", Type = VisualizationType.InteractiveSim, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 26, Slug = "penrose-triangle", Title = "Penrose Triangle 3D Illusion Laboratory", Description = "Interactive 3D impossible tribar with illusion angle alignment, 3D spatial gap reveal, and Roger Penrose sheaf cohomology analysis.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 27, Slug = "penrose-stairs", Title = "Penrose Endless Stairs 3D Laboratory", Description = "Interactive 4-flight perpetual staircase with climbing marble animation, illusion alignment, and conservative field failure demonstration.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } },
+            new Visualization { Id = 28, Slug = "impossible-cube", Title = "Escher's Impossible Cube 3D Explorer", Description = "Interactive 3D Belvedere cube framework with depth transitivity cycle inspector and perspective trick alignment.", Type = VisualizationType.ThreeD, SupportedModes = new() { VisualizationMode.Explore, VisualizationMode.Guided, VisualizationMode.Mathematical } }
         };
 
         foreach (var v in visualizations)

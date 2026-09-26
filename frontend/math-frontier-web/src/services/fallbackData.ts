@@ -1000,6 +1000,96 @@ export const FALLBACK_WONDERS: MathematicalWonder[] = [
     experimentSlug: 'hanging-paradox-lab',
     tags: ['Paradox', 'Epistemic Logic', 'Game Theory', 'Backward Induction', 'Self-Reference', 'Philosophy of Math'],
     sources: ['Ekbom, Lennart (1943)', 'O\'Connor, D.J. (1948)', 'Quine, W.V. (1953)', 'Gardner, Martin (1963)', 'Kripke, Saul (2011)']
+  },
+  {
+    id: 20,
+    slug: 'penrose-triangle',
+    title: 'The Penrose Triangle (Impossible Tribar)',
+    shortDescription: 'The iconic impossible 3D shape: three straight beams of square cross-section meeting at right angles, forming a closed triangle that cannot exist in Euclidean 3D space.',
+    fullDescription: 'First created in 1934 by Swedish artist Oscar Reutersvärd and independently discovered and popularized in 1958 by mathematician Roger Penrose and his father Lionel Penrose. Known as "impossibility in its purest form", it inspired M.C. Escher\'s famous lithograph "Waterfall" (1961). In true 3D space, physical models must incorporate a spatial gap or distorted helical twist that only aligns into a seamless closed triangle from one singular isometric vantage point.',
+    categoryId: 3,
+    status: 'PARADOX',
+    intuition: 'Each corner appears as a standard orthogonal 90-degree joint between two beams. When you follow the beams around all three corners, your eye traverses three right angles—yet ends up right back where it started, implying an impossible triangle whose interior angles sum to 270 degrees in flat space!',
+    mathematics: 'Cohomological Formulation (Roger Penrose, 1992): Let X be the 2D projection and F be the sheaf of local 3D depth assignments. While local depth coordinate patches exist consistently at each vertex, the cocycle condition fails on triple intersections: delta(c) != 0 => H^1(X, F) != 0.',
+    properties: [
+      'Three mutually perpendicular square beams meeting at 90-degree corners',
+      'Apparent interior angle sum: 90° + 90° + 90° = 270°',
+      'Requires non-zero first sheaf cohomology H^1(X, F) != 0 to classify as impossible',
+      'Physical 3D construction requires an open gap aligned precisely along line of sight'
+    ],
+    constructionSteps: [
+      '1. Construct beam 1 along the X axis from (0,0,0) to (L,0,0).',
+      '2. Construct beam 2 along the Y axis from (0,0,0) to (0,L,0).',
+      '3. Construct beam 3 extending forward in Z toward the camera from (0,L,0) to (0,L,D).',
+      '4. Turn toward (L,0,0) ending with a deliberate depth gap behind beam 1.',
+      '5. Place an isometric camera at theta = 35.264°, phi = 45° where the gap visually closes.'
+    ],
+    parametricEquations: 'P = \\begin{bmatrix} \\cos 30^\\circ & -\\cos 30^\\circ & 0 \\\\ -\\sin 30^\\circ & -\\sin 30^\\circ & 1 \\end{bmatrix}, \\quad H^1(X, \\mathcal{F}) \\neq 0',
+    visualizationSlug: 'penrose-triangle',
+    hasExperiment: true,
+    experimentSlug: 'penrose-triangle-3d',
+    tags: ['Impossible Object', 'Geometry', 'Paradox', 'Interactive 3D', 'Cohomology', 'Escher'],
+    sources: ['Reutersvärd, Oscar (1934)', 'Penrose, L. S. & Penrose, R. (1958)', 'Penrose, Roger (1992)', 'Escher, M. C. (1961)']
+  },
+  {
+    id: 21,
+    slug: 'penrose-stairs',
+    title: 'The Penrose Stairs (Impossible Staircase)',
+    shortDescription: 'An endless circular four-flight staircase where every step climbs upward, yet perpetually returns to its starting point without gaining elevation.',
+    fullDescription: 'Created by Lionel and Roger Penrose in 1958 as a variation of the Penrose triangle and immortalized by M.C. Escher in his renowned 1960 print "Ascending and Descending". In physics and vector calculus, the staircase represents a non-conservative gradient paradox: climbing around a closed loop would allow an infinite extraction of gravitational potential energy.',
+    categoryId: 3,
+    status: 'PARADOX',
+    intuition: 'Imagine walking up four flights of stairs arranged in a square. You take step after step upward, your legs tiring as you gain altitude on each flight. Yet upon turning the fourth corner, you find yourself stepping onto the bottom step of flight one! In 3D reality, an optical alignment hides a massive vertical drop.',
+    mathematics: 'Vector Field Non-Conservatism: In classical mechanics, gravity is a conservative field F = -grad Phi. Around any closed loop C, the line integral must vanish: oint F * dr = 0. On Penrose stairs, each step has Delta z > 0, implying oint grad Phi * dr = 4N Delta h > 0, violating the fundamental theorem of calculus for line integrals.',
+    properties: [
+      'Four continuous flights of ascending steps arranged in a square loop',
+      'Perpetual motion loop violating conservation of gravitational potential energy',
+      'Closed curve path integral with non-zero curl of gradient: curl(grad Phi) != 0',
+      '3D realization requires an optical elevation drop concealed by perspective'
+    ],
+    constructionSteps: [
+      '1. Flight 1: Ascend 4 steps in the +X direction from z = 0 to z = h.',
+      '2. Flight 2: Ascend 4 steps in the +Y direction from z = h to z = 2h.',
+      '3. Flight 3: Ascend 4 steps in the -X direction from z = 2h to z = 3h.',
+      '4. Flight 4: Ascend 4 steps in the -Y direction from z = 3h to z = 4h.',
+      '5. Position camera so the top of flight 4 visually overlaps the bottom of flight 1.'
+    ],
+    parametricEquations: '\\oint_C \\nabla \\Phi \\cdot d\\mathbf{r} = \\Delta \\Phi_{\\text{net}} = 4N \\Delta h \\neq 0',
+    visualizationSlug: 'penrose-stairs',
+    hasExperiment: true,
+    experimentSlug: 'penrose-stairs-3d',
+    tags: ['Impossible Object', 'Geometry', 'Paradox', 'Interactive 3D', 'Vector Calculus', 'Escher'],
+    sources: ['Penrose, L. S. & Penrose, R. (1958)', 'Escher, M. C. (1960)', 'Dawson, J. W. (1984)']
+  },
+  {
+    id: 22,
+    slug: 'impossible-cube',
+    title: 'The Impossible Cube (Escher\'s Cube)',
+    shortDescription: 'A geometric cube framework whose structural beams connect front-to-back in an impossible knot, violating Euclidean depth transitivity.',
+    fullDescription: 'Invented by M.C. Escher in his 1958 lithograph "Belvedere", where a boy seated on a bench holds the bizarre construct. In a normal cube, front edges lie strictly in front of back edges. In the impossible cube, front-facing vertical pillars cross behind back-facing horizontal beams and connect to rear vertices, creating an irreconcilable topological and depth paradox.',
+    categoryId: 3,
+    status: 'PARADOX',
+    intuition: 'Look at the front-left vertical post: at the bottom, it stands in front of the cube. Follow it upward, and suddenly it connects to the back-left corner of the roof! The cube defies our brain\'s 3D depth-sorting algorithm by presenting conflicting occlusion cues simultaneously.',
+    mathematics: 'Depth Transitivity Violation: Let A < B denote "object A is in front of object B along line of sight v". A valid 3D scene requires < to be a strict partial order. The impossible cube introduces an intransitive cycle: v1 < v2 < v3 < v1, which cannot be satisfied by any height function z: V -> R.',
+    properties: [
+      'Twelve orthogonal beams forming a cube-like skeletal framework',
+      'Front and back vertical struts swap depth coordinates at upper and lower joints',
+      'Violates transitivity of visual depth ordering: a < b < c < a',
+      'Can be realized in 3D using notched overlapping joints or foreshortened non-planar beams'
+    ],
+    constructionSteps: [
+      '1. Construct 12 square beams forming the 8 vertices of a rectangular box.',
+      '2. Offset the front-right strut backward in depth Z at the upper junction.',
+      '3. Offset the back-left strut forward in depth Z at the lower junction.',
+      '4. Add visual cutouts or mitred intersections that create ambiguous occlusion.',
+      '5. View through an isometric projection where contradictory overlaps align.'
+    ],
+    parametricEquations: 'v_i \\prec v_j \\land v_j \\prec v_k \\land v_k \\prec v_i \\implies \\text{Intransitive Depth Cycle}',
+    visualizationSlug: 'impossible-cube',
+    hasExperiment: true,
+    experimentSlug: 'impossible-cube-3d',
+    tags: ['Impossible Object', 'Geometry', 'Paradox', 'Interactive 3D', 'Depth Sorting', 'Escher'],
+    sources: ['Escher, M. C. (1958)', 'Cowan, T. M. (1974)', 'Sugihara, Kokichi (1986)']
   }
 ];
 
@@ -1046,5 +1136,8 @@ export const FALLBACK_VISUALIZATIONS: Visualization[] = [
   { id: 22, slug: 'koch-snowflake', title: 'Koch Snowflake Infinite Shoreline', description: 'Iterative line replacement visualizer demonstrating infinite perimeter enclosing finite area.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
   { id: 23, slug: 'cantor-set', title: 'Cantor Set Middle-Third Construction', description: 'Stage-by-stage removal of the middle third illustrating measure zero and uncountability.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
   { id: 24, slug: 'dragon-curve', title: 'Heighway Dragon Paper-Folding Fractal', description: 'Recursive paper-folding turn generator and plane-tiling 2D fractal curve.', type: 'Canvas2D', supportedModes: ['Explore', 'Guided'] },
-  { id: 25, slug: 'unexpected-hanging-paradox', title: 'Unexpected Hanging Backward Induction Laboratory', description: 'Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] }
+  { id: 25, slug: 'unexpected-hanging-paradox', title: 'Unexpected Hanging Backward Induction Laboratory', description: 'Interactive week-day calendar simulator, backward induction elimination tree, prisoner certainty meter, and surprise knock timeline.', type: 'InteractiveSim', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 26, slug: 'penrose-triangle', title: 'Penrose Triangle 3D Illusion Laboratory', description: 'Interactive 3D impossible tribar with illusion angle alignment, 3D spatial gap reveal, and Roger Penrose sheaf cohomology analysis.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 27, slug: 'penrose-stairs', title: 'Penrose Endless Stairs 3D Laboratory', description: 'Interactive 4-flight perpetual staircase with climbing marble animation, illusion alignment, and conservative field failure demonstration.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] },
+  { id: 28, slug: 'impossible-cube', title: 'Escher\'s Impossible Cube 3D Explorer', description: 'Interactive 3D Belvedere cube framework with depth transitivity cycle inspector and perspective trick alignment.', type: 'ThreeD', supportedModes: ['Explore', 'Guided', 'Mathematical'] }
 ];
